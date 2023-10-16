@@ -1,8 +1,9 @@
+import Divider from "@/components/Divider";
 
 export default function Home() {
   return (
-    <main className="min-h-screen w-screen flex items-center justify-center">
-      Hello world
+    <main className="h-screen w-screen flex items-center justify-center">
+      <Divider />
     </main>
   )
 }
