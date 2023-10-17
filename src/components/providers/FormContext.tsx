@@ -52,3 +52,15 @@ export const project: Tproject = {
     link: "",
     description: ""
 }
+
+export const FormAboutSectionContext = createContext<TFormAboutSectionContext>({
+    aboutSection: aboutSection,
+    setAboutSection: () => { },
+});
+
+// achievements: [achievement],
+// experience: [experience],
+// education: [education],
+// skills: [skill],
+// projects: [project],
+//     setProjects: () => { }

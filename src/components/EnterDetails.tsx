@@ -3,6 +3,14 @@
 import {
     Trash2, PlusSquare, ArrowBigLeft, ArrowBigRight
 } from 'lucide-react'
+import {
+    Card,
+    CardContent,
+    CardDescription,
+    CardFooter,
+    CardHeader,
+    CardTitle,
+} from "@/components/ui/card"
 import React from 'react'
 import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
@@ -27,6 +35,7 @@ export default function EnterDetails() {
         { title: "Education" },
         { title: "Skills" },
         { title: "Projects" },
+        { title: "Generate" },
     ];
 
     function getSectionComponent() {
@@ -37,6 +46,7 @@ export default function EnterDetails() {
             case 3: return <EducationItem />;
             case 4: return <SkillsItem />;
             case 5: return <ProjectItem />;
+            case 6: return <GenerateItem />;
             default: return null;
         }
     }
@@ -46,7 +56,7 @@ export default function EnterDetails() {
             <Stepper steps={steps} activeStep={activeStep} />
             <div>
                 {getSectionComponent()}
-                <div className="w-full p-4 flex items-center justify-between">
+                <div className="w-full p-4 flex gap-4 items-center justify-center">
                     {
                         (activeStep !== 0) && (
                             <Button
@@ -67,18 +77,6 @@ export default function EnterDetails() {
                                 onClick={() => setActiveStep(activeStep + 1)}
                             >
                                 Next
-                                <ArrowBigRight />
-                            </Button>
-                        )
-                    }
-                    {
-                        (activeStep === steps.length - 1) && (
-                            <Button
-                                variant={"outline"}
-                                className="text-gray-100 bg-red-400 hover:text-white hover:bg-red-500"
-                                onClick={() => setActiveStep(activeStep + 1)}
-                            >
-                                Submit
                                 <ArrowBigRight />
                             </Button>
                         )
@@ -514,5 +512,42 @@ function ProjectItem() {
                 }
             </div>
         </div>
+    )
+}
+
+function GenerateItem() {
+    const slogans: string[] = [
+        "Crafting Careers, One Word at a Time",
+        "Your Gateway to Professional Success",
+        "Resumes that Stand Out, Careers that Soar",
+        "Elevate Your Profile, Elevate Your Career",
+        "Where Ambitions Meet Opportunities",
+        "Your Journey to Professional Excellence Begins Here",
+        "Empowering Professionals with Impressive Resumes",
+        "Unlock Your Career Potential with Tailored Resumes",
+        "Building Resumes, Building Futures",
+        "Your Resume, Your Success Story",
+    ]
+
+    return (
+        <Card className="m-4 mt-8 h-[256px] flex flex-col items-center justify-center">
+            <CardHeader className="flex gap-2 flex-col items-center justify-center">
+                <CardTitle>Generate Resume</CardTitle>
+                <CardDescription className="text-center">
+                    {
+                        slogans[Math.floor(Math.random() * slogans.length)]
+                    }
+                </CardDescription>
+            </CardHeader>
+            <CardContent>
+                <Button
+                    variant={"outline"}
+                    className="text-gray-100 bg-red-400 hover:text-white hover:bg-red-500"
+                >
+                    Submit
+                    <ArrowBigRight />
+                </Button>
+            </CardContent>
+        </Card>
     )
 }
