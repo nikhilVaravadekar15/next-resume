@@ -1,7 +1,7 @@
 "use client"
 
 import {
-    Trash2, PlusSquare, ArrowBigLeft, ArrowBigRight
+    Trash2, PlusSquare, ArrowBigLeft, ArrowBigRight, Download,
 } from 'lucide-react'
 import {
     Card,
@@ -22,6 +22,7 @@ import {
 import {
     TAchievement, TEducation, TExperience, TSkill, Tproject
 } from '@/types/index'
+import Link from 'next/link'
 
 
 export default function EnterDetails() {
@@ -52,20 +53,19 @@ export default function EnterDetails() {
     }
 
     return (
-        <div className="w-full h-full overflow-y-scroll">
+        <div className="h-full w-full overflow-y-scroll">
             <Stepper steps={steps} activeStep={activeStep} />
-            <div>
+            <div className="">
                 {getSectionComponent()}
                 <div className="w-full p-4 flex gap-4 items-center justify-center">
                     {
-                        (activeStep !== 0) && (
+                        (activeStep != 0) && (
                             <Button
                                 variant={"outline"}
-                                className="text-gray-100 bg-blue-400 hover:text-white hover:bg-blue-500"
+                                className="absolute left-0 top-0 h-full text-gray-600 bg-blue-100 rounded-none hover:text-white hover:bg-blue-300"
                                 onClick={() => setActiveStep(activeStep - 1)}
                             >
                                 <ArrowBigLeft />
-                                Previous
                             </Button>
                         )
                     }
@@ -73,10 +73,9 @@ export default function EnterDetails() {
                         (activeStep !== steps.length - 1) && (
                             <Button
                                 variant={"outline"}
-                                className="text-gray-100 bg-blue-400 hover:text-white hover:bg-blue-500"
+                                className="absolute top-0 right-0 h-full text-gray-600 bg-blue-100 rounded-none hover:text-white hover:bg-blue-300"
                                 onClick={() => setActiveStep(activeStep + 1)}
                             >
-                                Next
                                 <ArrowBigRight />
                             </Button>
                         )
@@ -547,6 +546,21 @@ function GenerateItem() {
                     Submit
                     <ArrowBigRight />
                 </Button>
+                {/* <Button
+                    variant={"outline"}
+                    className="text-gray-100 bg-blue-400 hover:text-white hover:bg-blue-500"
+                >
+                    <Link
+                        download={true}
+                        draggable={false}
+                        target={"_blank"}
+                        href={"http://localhost:3000/r.pdf"}
+                        className="flex gap-3 items-center justify-center"
+                    >
+                        <Download size={16} />
+                        <span className="font-bold">Download</span>
+                    </Link>
+                </Button> */}
             </CardContent>
         </Card>
     )

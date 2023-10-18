@@ -1,11 +1,17 @@
 "use client"
 
+import {
+  ArrowBigLeft
+} from "lucide-react";
 import React from "react";
 import { TAboutSection } from "@/types";
-import EnterDetails from "@/components/EnterDetails";
 import {
   FormAboutSectionContext, aboutSection
 } from "@/components/providers/FormContext";
+import { Button } from "@/components/ui/button";
+import PdfRenderer from "@/components/PdfRenderer";
+import EnterDetails from "@/components/EnterDetails";
+import Link from "next/link";
 
 
 export default function Home() {
@@ -26,8 +32,9 @@ export default function Home() {
       setAboutSection: setAboutSection
     }}>
       <main className="h-screen w-screen flex items-center justify-center">
-        <EnterDetails />
-        <div className="bg-blue-400 h-full w-full"></div>
+        <div className="h-full w-[50%]">
+          <EnterDetails />
+        </div>
       </main>
     </FormAboutSectionContext.Provider>
   )
