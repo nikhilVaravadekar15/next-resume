@@ -1,14 +1,21 @@
+export type TStep = {
+    title: string
+}
+
+export type TActiveStepContext = {
+    step: number
+    setActiveStep: (index: number) => void
+}
 
 export type TAboutSection = {
     firstname: string
     middlename?: string
     lastname: string
-    image?: File
-    designation: string
+    designation?: string
     address: string
     email: string
     phone: string
-    summary: string
+    summary?: string
 }
 
 export type TAchievement = {
@@ -43,18 +50,4 @@ export type Tproject = {
     name: string
     link?: string
     description?: string
-}
-
-export type TFormAboutSectionContext = {
-    aboutSection: TAboutSection
-    setAboutSection: (event: any) => void
-}
-
-export type TFormProjectsContext = {
-    // achievements: TAchievement[]
-    // experience: TExperience[]
-    // education: TEducation[]
-    // skills: TSkill[]
-    projects: Tproject[]
-    setProjects: (index?: number) => void
 }
