@@ -5,16 +5,17 @@ import {
     TExperience,
     TAchievement,
     TStep,
+    TAboutSection,
 } from "@/types";
 
 export const steps: TStep[] = [
     { title: "About" },
-    { title: "Achievements" },
-    { title: "Experience" },
     { title: "Education" },
     { title: "Skills" },
-    { title: "Certification" },
+    { title: "Achievements" },
     { title: "Projects" },
+    { title: "Certification" },
+    { title: "Experience" },
     { title: "Generate" },
 ];
 
@@ -50,4 +51,12 @@ export const project: Tproject = {
     name: "",
     link: "",
     description: ""
+}
+
+export const aboutSection: TAboutSection = {
+    firstname: "",
+    lastname: "",
+    address: "",
+    email: "",
+    phone: ""
 }

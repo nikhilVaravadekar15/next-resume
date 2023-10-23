@@ -28,9 +28,9 @@ export default function EnterDetails() {
             case 1: return <EducationStep />;
             case 2: return <SkillsStep />;
             case 3: return <AchievementsStep />;
-            case 4: return <CertificationStep />;
-            case 5: return <ExperienceStep />;
-            case 6: return <ProjectStep />;
+            case 4: return <ProjectStep />;
+            case 5: return <CertificationStep />;
+            case 6: return <ExperienceStep />;
             case 7: return <GenerateStep />;
             default: return null;
         }
@@ -42,7 +42,12 @@ export default function EnterDetails() {
             setActiveStep: setActiveStep
         }}>
             <div className="h-full w-full overflow-y-scroll">
-                <Stepper steps={steps} activeStep={step} />
+                <Stepper
+                    steps={steps}
+                    activeStep={step}
+                    // lineMarginOffset={8}
+                    titleFontSize={14}
+                />
                 <div>
                     {getSectionComponent()}
                 </div>

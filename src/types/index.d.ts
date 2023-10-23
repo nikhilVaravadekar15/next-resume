@@ -51,3 +51,8 @@ export type Tproject = {
     link?: string
     description?: string
 }
+
+export type TFormAboutSectionContext = {
+    aboutSection: TAboutSection
+    setAboutSection: (data: TAboutSection) => void
+}
