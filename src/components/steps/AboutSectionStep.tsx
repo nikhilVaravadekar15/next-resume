@@ -2,18 +2,19 @@
 
 import { z } from 'zod';
 import React from 'react'
-import { useFormik } from 'formik';
+import { useForm } from "react-hook-form";
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
+import { zodResolver } from "@hookform/resolvers/zod";
 import NavigationButtons from '@/components/NavigationButtons';
+import { TActiveStepContext, TFormAboutSectionContext } from '@/types/index'
 import { ActiveStepContext } from '@/components/providers/ActiveStepContext';
 import { FormAboutSectionContext } from '@/components/providers/FormAboutSectionContext';
-import { TAboutSection, TActiveStepContext, TFormAboutSectionContext } from '@/types/index'
 
 
 export default function AboutSectionStep() {
     const { step, setActiveStep } = React.useContext<TActiveStepContext>(ActiveStepContext)
-    const { aboutSection, setAboutSection } = React.useContext<TFormAboutSectionContext>(FormAboutSectionContext)
+    const { setAboutSection } = React.useContext<TFormAboutSectionContext>(FormAboutSectionContext)
 
     const formSchema = z.object({
         firstname: z.string()
@@ -37,53 +38,20 @@ export default function AboutSectionStep() {
             .optional()
     })
 
-    const formik = useFormik<TAboutSection>({
-        initialValues: aboutSection,
-        validate: (values: TAboutSection) => {
-            const errors: Partial<TAboutSection> = {};
-            const result = formSchema.safeParse(values)
+    type ZAboutSection = z.infer<typeof formSchema>
 
-            if (!result.success) {
-                const formErrors = result.error.format()
-
-                if (formErrors.firstname) {
-                    errors.firstname = formErrors.firstname?._errors[0]
-                }
-                if (formErrors.middlename) {
-                    errors.middlename = formErrors.middlename?._errors[0]
-                }
-                if (formErrors.lastname) {
-                    errors.lastname = formErrors.lastname?._errors[0]
-                }
-                if (formErrors.designation) {
-                    errors.designation = formErrors.designation?._errors[0]
-                }
-                if (formErrors.address) {
-                    errors.address = formErrors.address?._errors[0]
-                }
-                if (formErrors.email) {
-                    errors.email = formErrors.email?._errors[0]
-                }
-                if (formErrors.phone) {
-                    errors.phone = formErrors.phone?._errors[0]
-                }
-                if (formErrors.summary) {
-                    errors.summary = formErrors.summary?._errors[0]
-                }
-            }
-            return errors
-        },
-        onSubmit: (values: TAboutSection) => {
-            setAboutSection(values)
-            setActiveStep(step + 1)
-        },
+    const { register, handleSubmit, getFieldState } = useForm<ZAboutSection>({
+        resolver: zodResolver(formSchema)
     });
 
 
     return (
         <form
             className="m-4 border rounded"
-            onSubmit={formik.handleSubmit}
+            onSubmit={handleSubmit((data: ZAboutSection) => {
+                setAboutSection(data)
+                setActiveStep(step + 1)
+            })}
         >
             <div className="p-4 grid gap-2 grid-cols-1">
                 <div className="flex gap-1 flex-col justify-start">
@@ -92,32 +60,28 @@ export default function AboutSectionStep() {
                         <span className="text-red-700">*</span>
                     </Label>
                     <Input
-                        name="firstname"
                         type="text"
-                        placeholder="e.g. John"
                         autoComplete="off"
-                        value={formik.values.firstname}
-                        onChange={formik.handleChange}
+                        placeholder="e.g. John"
+                        {...register("firstname", { required: true })}
                     />
                     {
-                        formik.errors.firstname && formik.touched.firstname && (
-                            <span className="text-xs text-red-500">{formik.errors.firstname}</span>
+                        getFieldState("firstname").isDirty && getFieldState("firstname").isTouched && getFieldState("firstname").error?.message && (
+                            <span className="text-xs text-red-500">{getFieldState("firstname").error?.message}</span>
                         )
                     }
                 </div>
                 <div className="flex gap-1 flex-col justify-start">
-                    <Label className="font-semibold text-slate-900">Middle Name <span className="opt-text">(optional)</span></Label>
+                    <Label className="font-semibold text-slate-900">Middle Name</Label>
                     <Input
-                        name="middlename"
                         type="text"
-                        placeholder="e.g. John"
                         autoComplete="off"
-                        value={formik.values.middlename}
-                        onChange={formik.handleChange}
+                        placeholder="e.g. J"
+                        {...register("middlename")}
                     />
                     {
-                        formik.errors.middlename && formik.touched.middlename && (
-                            <span className="text-xs text-red-500">{formik.errors.middlename}</span>
+                        getFieldState("middlename").isDirty && getFieldState("middlename").isTouched && getFieldState("middlename").error?.message && (
+                            <span className="text-xs text-red-500">{getFieldState("middlename").error?.message}</span>
                         )
                     }
                 </div>
@@ -127,16 +91,14 @@ export default function AboutSectionStep() {
                         <span className="text-red-700">*</span>
                     </Label>
                     <Input
-                        name="lastname"
                         type="text"
-                        placeholder="e.g. Doe"
                         autoComplete="off"
-                        value={formik.values.lastname}
-                        onChange={formik.handleChange}
+                        placeholder="e.g. Doe"
+                        {...register("lastname", { required: true })}
                     />
                     {
-                        formik.errors.lastname && formik.touched.lastname && (
-                            <span className="text-xs text-red-500">{formik.errors.lastname}</span>
+                        getFieldState("lastname").isDirty && getFieldState("lastname").isTouched && getFieldState("lastname").error?.message && (
+                            <span className="text-xs text-red-500">{getFieldState("lastname").error?.message}</span>
                         )
                     }
                 </div>
@@ -145,16 +107,14 @@ export default function AboutSectionStep() {
                 <div className="flex gap-1 flex-col justify-start">
                     <Label className="font-semibold text-slate-900">Designation</Label>
                     <Input
-                        name="designation"
                         type="text"
-                        placeholder="e.g. Sr.Accountants"
                         autoComplete="off"
-                        value={formik.values.designation}
-                        onChange={formik.handleChange}
+                        placeholder="e.g. Sr.Accountants"
+                        {...register("designation")}
                     />
                     {
-                        formik.errors.designation && formik.touched.designation && (
-                            <span className="text-xs text-red-500">{formik.errors.designation}</span>
+                        getFieldState("designation").isDirty && getFieldState("lastname").isTouched && getFieldState("lastname").error?.message && (
+                            <span className="text-xs text-red-500">{getFieldState("lastname").error?.message}</span>
                         )
                     }
                 </div>
@@ -164,16 +124,14 @@ export default function AboutSectionStep() {
                         <span className="text-red-700">*</span>
                     </Label>
                     <Input
-                        name="address"
                         type="text"
-                        placeholder="e.g. Lake Street-23"
                         autoComplete="off"
-                        value={formik.values.address}
-                        onChange={formik.handleChange}
+                        placeholder="e.g. Lake Street-23"
+                        {...register("address")}
                     />
                     {
-                        formik.errors.address && formik.touched.address && (
-                            <span className="text-xs text-red-500">{formik.errors.address}</span>
+                        getFieldState("address").isDirty && getFieldState("address").isTouched && getFieldState("address").error?.message && (
+                            <span className="text-xs text-red-500">{getFieldState("address").error?.message}</span>
                         )
                     }
                 </div>
@@ -185,16 +143,14 @@ export default function AboutSectionStep() {
                         <span className="text-red-700">*</span>
                     </Label>
                     <Input
-                        name="email"
                         type="email"
-                        placeholder="e.g. johndoe@gmail.com"
                         autoComplete="off"
-                        value={formik.values.email}
-                        onChange={formik.handleChange}
+                        placeholder="e.g. johndoe@gmail.com"
+                        {...register("email")}
                     />
                     {
-                        formik.errors.email && formik.touched.email && (
-                            <span className="text-xs text-red-500">{formik.errors.email}</span>
+                        getFieldState("email").isDirty && getFieldState("email").isTouched && getFieldState("email").error?.message && (
+                            <span className="text-xs text-red-500">{getFieldState("email").error?.message}</span>
                         )
                     }
                 </div>
@@ -204,31 +160,27 @@ export default function AboutSectionStep() {
                         <span className="text-red-700">*</span>
                     </Label>
                     <Input
-                        name="phone"
                         type="text"
-                        placeholder="e.g. 456-768-798"
                         autoComplete="off"
-                        value={formik.values.phone}
-                        onChange={formik.handleChange}
+                        placeholder="e.g. 456-768-798"
+                        {...register("phone")}
                     />
                     {
-                        formik.errors.phone && formik.touched.phone && (
-                            <span className="text-xs text-red-500">{formik.errors.phone}</span>
+                        getFieldState("phone").isDirty && getFieldState("phone").isTouched && getFieldState("phone").error?.message && (
+                            <span className="text-xs text-red-500">{getFieldState("phone").error?.message}</span>
                         )
                     }
                 </div>
                 <div className="flex gap-1 flex-col justify-start">
                     <Label className="font-semibold text-slate-900">Summary</Label>
                     <Input
-                        name="summary"
                         type="text"
                         autoComplete="off"
-                        value={formik.values.summary}
-                        onChange={formik.handleChange}
+                        {...register("summary")}
                     />
                     {
-                        formik.errors.summary && formik.touched.summary && (
-                            <span className="text-xs text-red-500">{formik.errors.summary}</span>
+                        getFieldState("summary").isDirty && getFieldState("summary").isTouched && getFieldState("summary").error?.message && (
+                            <span className="text-xs text-red-500">{getFieldState("summary").error?.message}</span>
                         )
                     }
                 </div>

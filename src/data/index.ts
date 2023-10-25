@@ -6,6 +6,7 @@ import {
     TAchievement,
     TStep,
     TAboutSection,
+    TCertification,
 } from "@/types";
 
 export const steps: TStep[] = [
@@ -19,18 +20,12 @@ export const steps: TStep[] = [
     { title: "Generate" },
 ];
 
-
-export const achievement: TAchievement = {
-    title: "",
-    description: ""
-}
-
-export const experience: TExperience = {
-    title: "",
-    org: "",
-    location: "",
-    startDate: "",
-    description: ""
+export const aboutSection: TAboutSection = {
+    firstname: "",
+    lastname: "",
+    address: "",
+    email: "",
+    phone: ""
 }
 
 export const education: TEducation = {
@@ -38,8 +33,6 @@ export const education: TEducation = {
     degree: "",
     location: "",
     startDate: "",
-    endDate: "",
-    description: ""
 }
 
 export const skill: TSkill = {
@@ -47,16 +40,27 @@ export const skill: TSkill = {
     description: ""
 }
 
+export const achievement: TAchievement = {
+    title: "",
+    description: ""
+}
+
 export const project: Tproject = {
-    name: "",
+    title: "",
     link: "",
     description: ""
 }
 
-export const aboutSection: TAboutSection = {
-    firstname: "",
-    lastname: "",
-    address: "",
-    email: "",
-    phone: ""
+export const certificate: TCertification = {
+    title: "",
+    description: ""
+}
+
+export const experience: TExperience = {
+    position: "",
+    org: "",
+    location: "",
+    startDate: "",
+    endDate: "",
+    description: ""
 }
