@@ -10,18 +10,17 @@ import { achievement } from "@/data";
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { TActiveStepContext } from '@/types/index'
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useFieldArray, useForm } from 'react-hook-form';
 import NavigationButtons from '@/components/NavigationButtons';
-import { TFormAchievementsContext } from '@/types/index';
+import { TActiveStepContext, TFormContext } from '@/types/index'
+import { FormContext } from '@/components/providers/FormContext';
 import { ActiveStepContext } from '@/components/providers/ActiveStepContext';
-import { FormAchievementsContext } from '@/components/providers/FormAchievementsContext';
 
 
 export default function AchievementsStep() {
+    const { setAchievements } = React.useContext<TFormContext>(FormContext)
     const { step, setActiveStep } = React.useContext<TActiveStepContext>(ActiveStepContext)
-    const { setAchievements } = React.useContext<TFormAchievementsContext>(FormAchievementsContext)
 
     const achievementsFormSchema = z.object({
         achievementsArray: z.object({

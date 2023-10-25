@@ -4,18 +4,13 @@ import {
   ArrowBigLeft
 } from "lucide-react";
 import React from "react";
-import { aboutSection, education, skill, achievement, project, certificate, experience } from "@/data";
-import { TAboutSection, TAchievement, TCertification, TEducation, TExperience, TSkill, Tproject } from "@/types";
 import { Button } from "@/components/ui/button";
 import PdfRenderer from "@/components/PdfRenderer";
 import EnterDetails from "@/components/EnterDetails";
-import { FormAboutSectionContext } from "@/components/providers/FormAboutSectionContext";
-import { FormEducationContext } from "@/components/providers/FormEducationContext";
-import { FormSkillsContext } from "@/components/providers/FormSkillsContext";
-import { FormAchievementsContext } from "@/components/providers/FormAchievementsContext";
-import { FormProjectsContext } from "@/components/providers/FormProjectsContext";
-import { FormCertificationContext } from "@/components/providers/FormCertificationContext";
-import { FormExperienceContext } from "@/components/providers/FormExperienceContext";
+import { FormContext } from "@/components/providers/FormContext";
+import { aboutSection, education, skill, achievement, project, certificate, experience } from "@/data";
+import { TAboutSection, TAchievement, TCertification, TEducation, TExperience, TSkill, Tproject } from "@/types";
+
 
 export default function Home() {
   const [state, setState] = React.useState<boolean>(true);
@@ -56,45 +51,41 @@ export default function Home() {
   }
 
   return (
-    <FormAboutSectionContext.Provider value={{ aboutSection: aboutSectionFields, setAboutSection: setAboutSection }}>
-      <FormEducationContext.Provider value={{ educations: educationFields, setEducations: setEducations }}>
-        <FormSkillsContext.Provider value={{ skills: skillFields, setSkills: setSkills }}>
-          <FormAchievementsContext.Provider value={{ achievement: achievementsFields, setAchievements: setAchievements }}>
-            <FormProjectsContext.Provider value={{ project: projectFields, setProjects: setProjects }}>
-              <FormCertificationContext.Provider value={{ certificates: certificatesFields, setCertificates: setCertificates }}>
-                <FormExperienceContext.Provider value={{ experiences: experienceFields, setExperiences: setExperiences }}>
-                  <main className="h-screen w-screen flex items-center justify-center">
-                    <div className="h-full w-[50%]">
-                      {
-                        state ? (
-                          <>
-                            <EnterDetails />
-                          </>
-                        ) : (
-                          <>
-                            <Button
-                              variant={"outline"}
-                              onClick={() => {
-                                window.location.reload();
-                              }}
-                              className="absolute left-0 top-0 h-full w-[48px] flex items-center justify-center text-gray-600 bg-blue-100 rounded-none hover:text-white hover:bg-blue-300"
-                            >
-                              <ArrowBigLeft />
-                            </Button>
-                            <PdfRenderer
-                              url="http://localhost:3000/r.pdf"
-                            />
-                          </>
-                        )
-                      }
-                    </div>
-                  </main>
-                </FormExperienceContext.Provider>
-              </FormCertificationContext.Provider>
-            </FormProjectsContext.Provider>
-          </FormAchievementsContext.Provider>
-        </FormSkillsContext.Provider>
-      </FormEducationContext.Provider>
-    </FormAboutSectionContext.Provider>
+    <FormContext.Provider value={{
+      aboutSection: aboutSectionFields, setAboutSection: setAboutSection,
+      educations: educationFields, setEducations: setEducations,
+      skills: skillFields, setSkills: setSkills,
+      achievement: achievementsFields, setAchievements: setAchievements,
+      project: projectFields, setProjects: setProjects,
+      certificates: certificatesFields, setCertificates: setCertificates,
+      experiences: experienceFields, setExperiences: setExperiences,
+    }}>
+      <main className="h-screen w-screen flex items-center justify-center">
+        <div className="h-full w-[50%]">
+          {
+            state ? (
+              <>
+                <EnterDetails />
+              </>
+            ) : (
+              <>
+                <Button
+                  variant={"outline"}
+                  onClick={() => {
+                    window.location.reload();
+                  }}
+                  className="absolute left-0 top-0 h-full w-[48px] flex items-center justify-center text-gray-600 bg-blue-100 rounded-none hover:text-white hover:bg-blue-300"
+                >
+                  <ArrowBigLeft />
+                </Button>
+                <PdfRenderer
+                  url="http://localhost:3000/r.pdf"
+                />
+              </>
+            )
+          }
+        </div>
+      </main>
+    </FormContext.Provider>
   )
 }

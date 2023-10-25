@@ -12,16 +12,16 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useFieldArray, useForm } from 'react-hook-form';
-import { TActiveStepContext, TFormCertificationContext } from '@/types/index';
+import NavigationButtons from '@/components/NavigationButtons';
+import { TActiveStepContext, TFormContext } from '@/types/index';
+import { FormContext } from '@/components/providers/FormContext';
 import { ActiveStepContext } from '@/components/providers/ActiveStepContext';
-import { FormCertificationContext } from '@/components/providers/FormCertificationContext';
-import NavigationButtons from '../NavigationButtons';
 
 
 export default function CertificationStep() {
 
+    const { setCertificates } = React.useContext<TFormContext>(FormContext)
     const { step, setActiveStep } = React.useContext<TActiveStepContext>(ActiveStepContext)
-    const { setCertificates } = React.useContext<TFormCertificationContext>(FormCertificationContext)
 
     const ertificateFormSchema = z.object({
         certs: z.object({

@@ -13,15 +13,15 @@ import { Button } from '@/components/ui/button';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useFieldArray, useForm } from 'react-hook-form';
 import NavigationButtons from '@/components/NavigationButtons';
-import { TActiveStepContext, TFormEducationContext } from '@/types/index'
+import { TActiveStepContext, TFormContext } from '@/types/index'
+import { FormContext } from '@/components/providers/FormContext';
 import { ActiveStepContext } from '@/components/providers/ActiveStepContext';
-import { FormEducationContext } from '@/components/providers/FormEducationContext';
 
 
 export default function EducationStep() {
 
+    const { setEducations } = React.useContext<TFormContext>(FormContext)
     const { step, setActiveStep } = React.useContext<TActiveStepContext>(ActiveStepContext)
-    const { setEducations } = React.useContext<TFormEducationContext>(FormEducationContext)
 
     const educationFormSchema = z.object({
         educationArray: z.object({

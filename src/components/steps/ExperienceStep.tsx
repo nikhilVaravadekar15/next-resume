@@ -13,15 +13,15 @@ import { Button } from '@/components/ui/button';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useFieldArray, useForm } from 'react-hook-form';
 import NavigationButtons from '@/components/NavigationButtons';
-import { TActiveStepContext, TFormExperienceContext } from '@/types/index';
+import { TActiveStepContext, TFormContext } from '@/types/index';
+import { FormContext } from '@/components/providers/FormContext';
 import { ActiveStepContext } from '@/components/providers/ActiveStepContext';
-import { FormExperienceContext } from '@/components/providers/FormExperienceContext';
 
 
 export default function ExperienceStep() {
 
+    const { setExperiences } = React.useContext<TFormContext>(FormContext)
     const { step, setActiveStep } = React.useContext<TActiveStepContext>(ActiveStepContext)
-    const { setExperiences } = React.useContext<TFormExperienceContext>(FormExperienceContext)
 
     const experienceFormSchema = z.object({
         experienceArray: z.object({

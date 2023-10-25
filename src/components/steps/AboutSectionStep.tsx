@@ -7,14 +7,14 @@ import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { zodResolver } from "@hookform/resolvers/zod";
 import NavigationButtons from '@/components/NavigationButtons';
-import { TActiveStepContext, TFormAboutSectionContext } from '@/types/index'
+import { TActiveStepContext, TFormContext } from '@/types/index'
+import { FormContext } from '@/components/providers/FormContext';
 import { ActiveStepContext } from '@/components/providers/ActiveStepContext';
-import { FormAboutSectionContext } from '@/components/providers/FormAboutSectionContext';
 
 
 export default function AboutSectionStep() {
+    const { setAboutSection } = React.useContext<TFormContext>(FormContext)
     const { step, setActiveStep } = React.useContext<TActiveStepContext>(ActiveStepContext)
-    const { setAboutSection } = React.useContext<TFormAboutSectionContext>(FormAboutSectionContext)
 
     const formSchema = z.object({
         firstname: z.string()

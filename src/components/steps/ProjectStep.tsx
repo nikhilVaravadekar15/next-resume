@@ -13,15 +13,15 @@ import { Button } from '@/components/ui/button';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useFieldArray, useForm } from 'react-hook-form';
 import NavigationButtons from '@/components/NavigationButtons';
-import { TActiveStepContext, TFormProjectsContext } from '@/types/index';
+import { TActiveStepContext, TFormContext } from '@/types/index';
+import { FormContext } from '@/components/providers/FormContext';
 import { ActiveStepContext } from '@/components/providers/ActiveStepContext';
-import { FormProjectsContext } from '@/components/providers/FormProjectsContext';
 
 
 export default function ProjectStep() {
 
+    const { setProjects } = React.useContext<TFormContext>(FormContext)
     const { step, setActiveStep } = React.useContext<TActiveStepContext>(ActiveStepContext)
-    const { setProjects } = React.useContext<TFormProjectsContext>(FormProjectsContext)
 
     const projectFormSchema = z.object({
         projectsArray: z.object({

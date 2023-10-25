@@ -52,43 +52,24 @@ export type TExperience = {
     description?: string
 }
 
-
 export type TActiveStepContext = {
     step: number
     setActiveStep: (index: number) => void
 }
 
-export type TFormAboutSectionContext = {
+export type TFormContext = {
     aboutSection: TAboutSection
     setAboutSection: (data: TAboutSection) => void
-}
-
-export type TFormEducationContext = {
     educations: TEducation[]
     setEducations: (data: TEducation[]) => void
-}
-
-export type TFormSkillsContext = {
     skills: TSkill[]
     setSkills: (data: TSkill[]) => void
-}
-
-export type TFormAchievementsContext = {
     achievement: TAchievement[]
     setAchievements: (data: TAchievement[]) => void
-}
-
-export type TFormProjectsContext = {
     project: Tproject[]
     setProjects: (data: Tproject[]) => void
-}
-
-export type TFormCertificationContext = {
     certificates: TCertification[]
     setCertificates: (data: TCertification[]) => void
-}
-
-export type TFormExperienceContext = {
     experiences: TExperience[]
     setExperiences: (data: TExperience[]) => void
 }

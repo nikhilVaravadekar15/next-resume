@@ -13,14 +13,14 @@ import { Button } from '@/components/ui/button';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useFieldArray, useForm } from 'react-hook-form';
 import NavigationButtons from '@/components/NavigationButtons';
-import { TActiveStepContext, TFormSkillsContext } from '@/types/index';
+import { TActiveStepContext, TFormContext } from '@/types/index';
+import { FormContext } from '@/components/providers/FormContext';
 import { ActiveStepContext } from '@/components/providers/ActiveStepContext';
-import { FormSkillsContext } from '@/components/providers/FormSkillsContext';
 
 
 export default function SkillsStep() {
+    const { setSkills } = React.useContext<TFormContext>(FormContext)
     const { step, setActiveStep } = React.useContext<TActiveStepContext>(ActiveStepContext)
-    const { setSkills } = React.useContext<TFormSkillsContext>(FormSkillsContext)
 
     const skillsFormSchema = z.object({
         skillsArray: z.object({
