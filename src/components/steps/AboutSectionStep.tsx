@@ -5,42 +5,19 @@ import React from 'react'
 import { useForm } from "react-hook-form";
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
+import { formSchema } from '@/zod/index'
 import { zodResolver } from "@hookform/resolvers/zod";
 import NavigationButtons from '@/components/NavigationButtons';
-import { TActiveStepContext, TFormContext } from '@/types/index'
 import { FormContext } from '@/components/providers/FormContext';
 import { ActiveStepContext } from '@/components/providers/ActiveStepContext';
+import { TAboutSection, TActiveStepContext, TFormContext } from '@/types/index'
 
 
 export default function AboutSectionStep() {
     const { setAboutSection } = React.useContext<TFormContext>(FormContext)
     const { step, setActiveStep } = React.useContext<TActiveStepContext>(ActiveStepContext)
 
-    const formSchema = z.object({
-        firstname: z.string()
-            .min(1, "Required")
-            .max(256, "Fullname must be less than 256 characters"),
-        middlename: z.string()
-            .optional(),
-        lastname: z.string()
-            .min(1, "Required")
-            .max(256, "Fullname must be less than 256 characters"),
-        designation: z.string()
-            .optional(),
-        address: z.string()
-            .min(1, "Required"),
-        email: z.string()
-            .min(1, "Required")
-            .email("Invalid email"),
-        phone: z.string()
-            .min(1, "Required"),
-        summary: z.string()
-            .optional()
-    })
-
-    type ZAboutSection = z.infer<typeof formSchema>
-
-    const { register, handleSubmit, getFieldState } = useForm<ZAboutSection>({
+    const { register, handleSubmit, getFieldState } = useForm<TAboutSection>({
         resolver: zodResolver(formSchema)
     });
 
@@ -48,7 +25,7 @@ export default function AboutSectionStep() {
     return (
         <form
             className="m-4 border rounded"
-            onSubmit={handleSubmit((data: ZAboutSection) => {
+            onSubmit={handleSubmit((data: TAboutSection) => {
                 setAboutSection(data)
                 setActiveStep(step + 1)
             })}

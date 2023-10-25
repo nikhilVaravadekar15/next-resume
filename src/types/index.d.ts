@@ -1,56 +1,40 @@
+import { z } from "zod";
+import {
+    formSchema,
+    education, educationFormSchema,
+    descriptor,
+    skillsFormSchema,
+    achievementsFormSchema,
+    project, projectFormSchema,
+    certificateFormSchema,
+    experience, experienceFormSchema
+} from '@/zod/index';
+
 export type TStep = {
     title: string
 }
 
-export type TAboutSection = {
-    firstname: string
-    middlename?: string
-    lastname: string
-    designation?: string
-    address: string
-    email: string
-    phone: string
-    summary?: string
-}
+export type TAboutSection = z.infer<typeof formSchema>
 
-export type TEducation = {
-    school: string
-    degree: string
-    location: string
-    startDate: string
-    endDate?: string
-    description?: string
-}
+export type TEducation = z.infer<typeof education>
 
-export type TSkill = {
-    title: string
-    description?: string
-}
+export type TEducations = z.infer<typeof educationFormSchema>
 
-export type TAchievement = {
-    title: string
-    description?: string
-}
+export type TDescriptor = z.infer<typeof descriptor>
 
-export type Tproject = {
-    title: string
-    link?: string
-    description?: string
-}
+export type TSkills = z.infer<typeof skillsFormSchema>
 
-export type TCertification = {
-    title: string
-    description?: string
-}
+export type TAchievements = z.infer<typeof achievementsFormSchema>
 
-export type TExperience = {
-    position: string
-    org: string
-    location?: string
-    startDate: string
-    endDate?: string
-    description?: string
-}
+export type TProject = z.infer<typeof project>
+
+export type TProjects = z.infer<typeof projectFormSchema>
+
+export type TCertification = z.infer<typeof certificateFormSchema>
+
+export type TExperience = z.infer<typeof experience>
+
+export type TExperiences = z.infer<typeof experienceFormSchema>
 
 export type TActiveStepContext = {
     step: number
@@ -62,14 +46,14 @@ export type TFormContext = {
     setAboutSection: (data: TAboutSection) => void
     educations: TEducation[]
     setEducations: (data: TEducation[]) => void
-    skills: TSkill[]
-    setSkills: (data: TSkill[]) => void
-    achievement: TAchievement[]
-    setAchievements: (data: TAchievement[]) => void
+    skills: TDescriptorll[]
+    setSkills: (data: TDescriptor[]) => void
+    achievement: TDescriptor[],
+    setAchievements: (data: TDescriptor[]) => void
     project: Tproject[]
     setProjects: (data: Tproject[]) => void
-    certificates: TCertification[]
-    setCertificates: (data: TCertification[]) => void
+    certificates: TDescriptor[]
+    setCertificates: (data: TDescriptor[]) => void
     experiences: TExperience[]
     setExperiences: (data: TExperience[]) => void
 }

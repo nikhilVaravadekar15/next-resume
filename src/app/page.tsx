@@ -9,17 +9,17 @@ import PdfRenderer from "@/components/PdfRenderer";
 import EnterDetails from "@/components/EnterDetails";
 import { FormContext } from "@/components/providers/FormContext";
 import { aboutSection, education, skill, achievement, project, certificate, experience } from "@/data";
-import { TAboutSection, TAchievement, TCertification, TEducation, TExperience, TSkill, Tproject } from "@/types";
+import { TAboutSection, TCertification, TEducation, TExperience, TDescriptor, TProject } from "@/types";
 
 
 export default function Home() {
   const [state, setState] = React.useState<boolean>(true);
   const [aboutSectionFields, setAboutSectionFields] = React.useState<TAboutSection>(aboutSection)
   const [educationFields, setEducationFields] = React.useState<TEducation[]>([education])
-  const [skillFields, setSkillsFields] = React.useState<TSkill[]>([skill])
-  const [achievementsFields, setAchievementsFields] = React.useState<TAchievement[]>([achievement])
-  const [projectFields, setProjectFields] = React.useState<Tproject[]>([project])
-  const [certificatesFields, setCertificatesFields] = React.useState<TCertification[]>([certificate])
+  const [skillFields, setSkillsFields] = React.useState<TDescriptor[]>([skill])
+  const [achievementsFields, setAchievementsFields] = React.useState<TDescriptor[]>([achievement])
+  const [projectFields, setProjectFields] = React.useState<TProject[]>([project])
+  const [certificatesFields, setCertificatesFields] = React.useState<TDescriptor[]>([certificate])
   const [experienceFields, setExperienceFields] = React.useState<TExperience[]>([experience])
 
   function setAboutSection(data: TAboutSection) {
@@ -30,19 +30,19 @@ export default function Home() {
     setEducationFields(data)
   }
 
-  function setSkills(data: TSkill[]) {
+  function setSkills(data: TDescriptor[]) {
     setSkillsFields(data)
   }
 
-  function setAchievements(data: TAchievement[]) {
+  function setAchievements(data: TDescriptor[]) {
     setAchievementsFields(data)
   }
 
-  function setProjects(data: Tproject[]) {
+  function setProjects(data: TProject[]) {
     setProjectFields(data)
   }
 
-  function setCertificates(data: TCertification[]) {
+  function setCertificates(data: TDescriptor[]) {
     setCertificatesFields(data)
   }
 

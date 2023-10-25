@@ -4,7 +4,6 @@ import {
     Trash2,
     PlusSquare,
 } from 'lucide-react';
-import { z } from 'zod';
 import React from 'react'
 import { achievement } from "@/data";
 import { Label } from '@/components/ui/label';
@@ -13,26 +12,15 @@ import { Button } from '@/components/ui/button';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useFieldArray, useForm } from 'react-hook-form';
 import NavigationButtons from '@/components/NavigationButtons';
-import { TActiveStepContext, TFormContext } from '@/types/index'
+import { TAchievements, TActiveStepContext, TFormContext } from '@/types/index'
 import { FormContext } from '@/components/providers/FormContext';
 import { ActiveStepContext } from '@/components/providers/ActiveStepContext';
+import { achievementsFormSchema } from '@/zod';
 
 
 export default function AchievementsStep() {
     const { setAchievements } = React.useContext<TFormContext>(FormContext)
     const { step, setActiveStep } = React.useContext<TActiveStepContext>(ActiveStepContext)
-
-    const achievementsFormSchema = z.object({
-        achievementsArray: z.object({
-            title: z.string()
-                .min(1, "Required")
-                .max(256, "Skill must be less than 256 characters"),
-            description: z.string()
-                .optional()
-        }).array()
-    })
-
-    type ZAchievements = z.infer<typeof achievementsFormSchema>
 
     const {
         register,
@@ -40,7 +28,7 @@ export default function AchievementsStep() {
         getFieldState,
         handleSubmit,
         formState: { errors }
-    } = useForm<ZAchievements>({
+    } = useForm<TAchievements>({
         resolver: zodResolver(achievementsFormSchema),
         mode: "all",
         defaultValues: {
@@ -56,7 +44,7 @@ export default function AchievementsStep() {
     return (
         <form
             className="m-4 border rounded"
-            onSubmit={handleSubmit((data: ZAchievements) => {
+            onSubmit={handleSubmit((data: TAchievements) => {
                 setAchievements(data.achievementsArray)
                 setActiveStep(step + 1)
             })}

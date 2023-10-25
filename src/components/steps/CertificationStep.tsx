@@ -13,9 +13,10 @@ import { Button } from '@/components/ui/button';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useFieldArray, useForm } from 'react-hook-form';
 import NavigationButtons from '@/components/NavigationButtons';
-import { TActiveStepContext, TFormContext } from '@/types/index';
+import { TActiveStepContext, TCertification, TFormContext } from '@/types/index';
 import { FormContext } from '@/components/providers/FormContext';
 import { ActiveStepContext } from '@/components/providers/ActiveStepContext';
+import { certificateFormSchema } from '@/zod';
 
 
 export default function CertificationStep() {
@@ -23,26 +24,14 @@ export default function CertificationStep() {
     const { setCertificates } = React.useContext<TFormContext>(FormContext)
     const { step, setActiveStep } = React.useContext<TActiveStepContext>(ActiveStepContext)
 
-    const ertificateFormSchema = z.object({
-        certs: z.object({
-            title: z.string()
-                .min(1, "Required")
-                .max(1024, "Certificate title must be less than 1024 characters"),
-            description: z.string()
-                .optional()
-        }).array()
-    })
-
-    type ZCertification = z.infer<typeof ertificateFormSchema>
-
     const {
         register,
         control,
         getFieldState,
         handleSubmit,
         formState: { errors }
-    } = useForm<ZCertification>({
-        resolver: zodResolver(ertificateFormSchema),
+    } = useForm<TCertification>({
+        resolver: zodResolver(certificateFormSchema),
         mode: "all",
         defaultValues: {
             certs: [certificate]
@@ -58,7 +47,7 @@ export default function CertificationStep() {
     return (
         <form
             className="m-4 border rounded"
-            onSubmit={handleSubmit((data: ZCertification) => {
+            onSubmit={handleSubmit((data: TCertification) => {
                 setCertificates(data.certs)
                 setActiveStep(step + 1)
             })}

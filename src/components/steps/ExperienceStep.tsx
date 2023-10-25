@@ -4,16 +4,16 @@ import {
     Trash2,
     PlusSquare,
 } from 'lucide-react';
-import { z } from 'zod';
 import React from 'react';
 import { experience } from "@/data";
+import { experienceFormSchema } from '@/zod';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useFieldArray, useForm } from 'react-hook-form';
 import NavigationButtons from '@/components/NavigationButtons';
-import { TActiveStepContext, TFormContext } from '@/types/index';
+import { TActiveStepContext, TExperiences, TFormContext } from '@/types/index';
 import { FormContext } from '@/components/providers/FormContext';
 import { ActiveStepContext } from '@/components/providers/ActiveStepContext';
 
@@ -23,34 +23,13 @@ export default function ExperienceStep() {
     const { setExperiences } = React.useContext<TFormContext>(FormContext)
     const { step, setActiveStep } = React.useContext<TActiveStepContext>(ActiveStepContext)
 
-    const experienceFormSchema = z.object({
-        experienceArray: z.object({
-            position: z.string()
-                .min(1, "Required")
-                .max(256, "Position must be less than 256 characters"),
-            org: z.string()
-                .min(1, "Required")
-                .max(1024, "Organization name must be less than 1024 characters"),
-            location: z.string()
-                .optional(),
-            startDate: z.string()
-                .min(1, "Required"),
-            endDate: z.string()
-                .optional(),
-            description: z.string()
-                .optional()
-        }).array()
-    })
-
-    type ZExperience = z.infer<typeof experienceFormSchema>
-
     const {
         register,
         control,
         getFieldState,
         handleSubmit,
         formState: { errors }
-    } = useForm<ZExperience>({
+    } = useForm<TExperiences>({
         resolver: zodResolver(experienceFormSchema),
         mode: "all",
         defaultValues: {
@@ -66,7 +45,7 @@ export default function ExperienceStep() {
     return (
         <form
             className="m-4 border rounded"
-            onSubmit={handleSubmit((data: ZExperience) => {
+            onSubmit={handleSubmit((data: TExperiences) => {
                 setExperiences(data.experienceArray)
                 setActiveStep(step + 1)
             })}

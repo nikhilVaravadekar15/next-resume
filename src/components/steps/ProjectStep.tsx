@@ -13,9 +13,10 @@ import { Button } from '@/components/ui/button';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useFieldArray, useForm } from 'react-hook-form';
 import NavigationButtons from '@/components/NavigationButtons';
-import { TActiveStepContext, TFormContext } from '@/types/index';
+import { TActiveStepContext, TFormContext, TProjects } from '@/types/index';
 import { FormContext } from '@/components/providers/FormContext';
 import { ActiveStepContext } from '@/components/providers/ActiveStepContext';
+import { projectFormSchema } from '@/zod';
 
 
 export default function ProjectStep() {
@@ -23,28 +24,13 @@ export default function ProjectStep() {
     const { setProjects } = React.useContext<TFormContext>(FormContext)
     const { step, setActiveStep } = React.useContext<TActiveStepContext>(ActiveStepContext)
 
-    const projectFormSchema = z.object({
-        projectsArray: z.object({
-            title: z.string()
-                .min(1, "Required")
-                .max(1024, "Project title must be less than 1024 characters"),
-            link: z.string()
-                .optional(),
-            description: z.string()
-                .optional()
-        }).array()
-    })
-
-    type ZProjects = z.infer<typeof projectFormSchema>
-
-
     const {
         register,
         control,
         getFieldState,
         handleSubmit,
         formState: { errors }
-    } = useForm<ZProjects>({
+    } = useForm<TProjects>({
         resolver: zodResolver(projectFormSchema),
         mode: "all",
         defaultValues: {
@@ -61,7 +47,7 @@ export default function ProjectStep() {
     return (
         <form
             className="m-4 border rounded"
-            onSubmit={handleSubmit((data: ZProjects) => {
+            onSubmit={handleSubmit((data: TProjects) => {
                 setProjects(data.projectsArray)
                 setActiveStep(step + 1)
             })}

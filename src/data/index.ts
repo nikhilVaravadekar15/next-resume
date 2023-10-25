@@ -1,12 +1,10 @@
 import {
-    TSkill,
-    Tproject,
+    TDescriptor,
     TEducation,
     TExperience,
-    TAchievement,
     TStep,
     TAboutSection,
-    TCertification,
+    TProject
 } from "@/types";
 
 export const steps: TStep[] = [
@@ -35,23 +33,23 @@ export const education: TEducation = {
     startDate: "",
 }
 
-export const skill: TSkill = {
+export const skill: TDescriptor = {
     title: "",
     description: ""
 }
 
-export const achievement: TAchievement = {
+export const achievement: TDescriptor = {
     title: "",
     description: ""
 }
 
-export const project: Tproject = {
+export const project: TProject = {
     title: "",
     link: "",
     description: ""
 }
 
-export const certificate: TCertification = {
+export const certificate: TDescriptor = {
     title: "",
     description: ""
 }

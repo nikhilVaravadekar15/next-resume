@@ -13,26 +13,15 @@ import { Button } from '@/components/ui/button';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useFieldArray, useForm } from 'react-hook-form';
 import NavigationButtons from '@/components/NavigationButtons';
-import { TActiveStepContext, TFormContext } from '@/types/index';
+import { TActiveStepContext, TFormContext, TSkills } from '@/types/index';
 import { FormContext } from '@/components/providers/FormContext';
 import { ActiveStepContext } from '@/components/providers/ActiveStepContext';
+import { skillsFormSchema } from '@/zod';
 
 
 export default function SkillsStep() {
     const { setSkills } = React.useContext<TFormContext>(FormContext)
     const { step, setActiveStep } = React.useContext<TActiveStepContext>(ActiveStepContext)
-
-    const skillsFormSchema = z.object({
-        skillsArray: z.object({
-            title: z.string()
-                .min(1, "Required")
-                .max(256, "Skill must be less than 256 characters"),
-            description: z.string()
-                .optional()
-        }).array()
-    })
-
-    type ZSkills = z.infer<typeof skillsFormSchema>
 
     const {
         register,
@@ -40,7 +29,7 @@ export default function SkillsStep() {
         getFieldState,
         handleSubmit,
         formState: { errors }
-    } = useForm<ZSkills>({
+    } = useForm<TSkills>({
         resolver: zodResolver(skillsFormSchema),
         mode: "all",
         defaultValues: {
@@ -56,7 +45,7 @@ export default function SkillsStep() {
     return (
         <form
             className="m-4 border rounded"
-            onSubmit={handleSubmit((data: ZSkills) => {
+            onSubmit={handleSubmit((data: TSkills) => {
                 setSkills(data.skillsArray)
                 setActiveStep(step + 1)
             })}

@@ -13,9 +13,10 @@ import { Button } from '@/components/ui/button';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useFieldArray, useForm } from 'react-hook-form';
 import NavigationButtons from '@/components/NavigationButtons';
-import { TActiveStepContext, TFormContext } from '@/types/index'
+import { TActiveStepContext, TEducations, TFormContext } from '@/types/index'
 import { FormContext } from '@/components/providers/FormContext';
 import { ActiveStepContext } from '@/components/providers/ActiveStepContext';
+import { educationFormSchema } from '@/zod';
 
 
 export default function EducationStep() {
@@ -23,33 +24,13 @@ export default function EducationStep() {
     const { setEducations } = React.useContext<TFormContext>(FormContext)
     const { step, setActiveStep } = React.useContext<TActiveStepContext>(ActiveStepContext)
 
-    const educationFormSchema = z.object({
-        educationArray: z.object({
-            school: z.string()
-                .min(1, "Required"),
-            degree: z.string()
-                .min(1, "Required")
-                .max(256, "Fullname must be less than 256 characters"),
-            location: z.string()
-                .min(1, "Required"),
-            startDate: z.string()
-                .min(1, "Required"),
-            endDate: z.string()
-                .optional(),
-            description: z.string()
-                .optional()
-        }).array()
-    })
-
-    type ZEducation = z.infer<typeof educationFormSchema>
-
     const {
         register,
         control,
         handleSubmit,
         getFieldState,
         formState: { errors }
-    } = useForm<ZEducation>({
+    } = useForm<TEducations>({
         resolver: zodResolver(educationFormSchema),
         mode: "all",
         defaultValues: {
@@ -66,7 +47,7 @@ export default function EducationStep() {
     return (
         <form
             className="m-4 border rounded"
-            onSubmit={handleSubmit((data: ZEducation) => {
+            onSubmit={handleSubmit((data: TEducations) => {
                 setEducations(data.educationArray)
                 setActiveStep(step + 1)
             })}
