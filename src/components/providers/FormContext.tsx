@@ -18,4 +18,5 @@ export const FormContext = createContext<TFormContext>({
     setCertificates: () => { },
     experiences: [experience],
     setExperiences: () => { },
+    mutation: () => { }
 });

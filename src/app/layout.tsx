@@ -1,6 +1,6 @@
 import './globals.css'
 import type { Metadata } from 'next'
-
+import ReactQueryProvider from '@/components/providers/ReactQueryProvider'
 
 export const metadata: Metadata = {
   title: "Next-resume",
@@ -22,7 +22,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <ReactQueryProvider>
+          {children}
+        </ReactQueryProvider>
+      </body>
     </html>
   )
 }

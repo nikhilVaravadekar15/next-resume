@@ -41,19 +41,23 @@ export type TActiveStepContext = {
     setActiveStep: (index: number) => void
 }
 
-export type TFormContext = {
+export type TForm = {
     aboutSection: TAboutSection
-    setAboutSection: (data: TAboutSection) => void
     educations: TEducation[]
+    skills?: TDescriptor[]
+    achievement?: TDescriptor[],
+    project?: Tproject[]
+    certificates?: TDescriptor[]
+    experiences?: TExperience[]
+}
+
+export type TFormContext = TForm & {
+    setAboutSection: (data: TAboutSection) => void
     setEducations: (data: TEducation[]) => void
-    skills: TDescriptorll[]
     setSkills: (data: TDescriptor[]) => void
-    achievement: TDescriptor[],
     setAchievements: (data: TDescriptor[]) => void
-    project: Tproject[]
     setProjects: (data: Tproject[]) => void
-    certificates: TDescriptor[]
     setCertificates: (data: TDescriptor[]) => void
-    experiences: TExperience[]
     setExperiences: (data: TExperience[]) => void
+    mutation: (form: TForm) => void
 }
