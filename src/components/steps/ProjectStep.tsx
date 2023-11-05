@@ -83,7 +83,10 @@ export default function ProjectStep() {
                                 </div>
                                 <div className="grid gap-2 grid-cols-1">
                                     <div className="flex gap-1 flex-col justify-start">
-                                        <Label className="font-semibold text-slate-900">Project Name</Label>
+                                        <Label className="font-semibold text-slate-900">
+                                            Project Name
+                                            <span className="text-red-700">*</span>
+                                        </Label>
                                         <Input
                                             type="text"
                                             autoComplete="off"

@@ -82,7 +82,10 @@ export default function ExperienceStep() {
                                 <div className="flex gap-5 flex-col">
                                     <div className="grid gap-2 grid-cols-1">
                                         <div className="flex gap-1 flex-col justify-start">
-                                            <Label className="font-semibold text-slate-900">Position</Label>
+                                            <Label className="font-semibold text-slate-900">
+                                                Position
+                                                <span className="text-red-700">*</span>
+                                            </Label>
                                             <Input
                                                 type="text"
                                                 autoComplete="off"
@@ -96,7 +99,10 @@ export default function ExperienceStep() {
                                             }
                                         </div>
                                         <div className="flex gap-1 flex-col justify-start">
-                                            <Label className="font-semibold text-slate-900">Organization</Label>
+                                            <Label className="font-semibold text-slate-900">
+                                                Organization
+                                                <span className="text-red-700">*</span>
+                                            </Label>
                                             <Input
                                                 type="text" autoComplete="off"
                                                 placeholder="e.g. Amazon"
@@ -124,7 +130,10 @@ export default function ExperienceStep() {
                                     </div>
                                     <div className="grid gap-2 grid-cols-1">
                                         <div className="flex gap-1 flex-col justify-start">
-                                            <Label className="font-semibold text-slate-900">Start Date</Label>
+                                            <Label className="font-semibold text-slate-900">
+                                                Start Date
+                                                <span className="text-red-700">*</span>
+                                            </Label>
                                             <Input
                                                 type="date"
                                                 autoComplete="off"

@@ -86,7 +86,7 @@ export default function AboutSectionStep() {
                     <Input
                         type="text"
                         autoComplete="off"
-                        placeholder="e.g. Sr.Accountants"
+                        placeholder="e.g. Software engineer"
                         {...register("designation")}
                     />
                     {

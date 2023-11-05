@@ -88,7 +88,10 @@ export default function EducationStep() {
                                 <div className="flex gap-5 flex-col">
                                     <div className="grid gap-2 grid-cols-1">
                                         <div className="flex gap-1 flex-col justify-start">
-                                            <Label className="font-semibold text-slate-900">School / College</Label>
+                                            <Label className="font-semibold text-slate-900">
+                                                School / College
+                                                <span className="text-red-700">*</span>
+                                            </Label>
                                             <Input
                                                 type="text"
                                                 autoComplete="off"
@@ -101,7 +104,10 @@ export default function EducationStep() {
                                             }
                                         </div>
                                         <div className="flex gap-1 flex-col justify-start">
-                                            <Label className="font-semibold text-slate-900">Degree</Label>
+                                            <Label className="font-semibold text-slate-900">
+                                                Degree
+                                                <span className="text-red-700">*</span>
+                                            </Label>
                                             <Input
                                                 type="text"
                                                 autoComplete="off"
@@ -114,7 +120,10 @@ export default function EducationStep() {
                                             }
                                         </div>
                                         <div className="flex gap-1 flex-col justify-start">
-                                            <Label className="font-semibold text-slate-900">Location</Label>
+                                            <Label className="font-semibold text-slate-900">
+                                                Location
+                                                <span className="text-red-700">*</span>
+                                            </Label>
                                             <Input
                                                 type="text"
                                                 autoComplete="off"
@@ -129,7 +138,10 @@ export default function EducationStep() {
                                     </div>
                                     <div className="grid gap-2 grid-cols-1">
                                         <div className="flex gap-1 flex-col justify-start">
-                                            <Label className="font-semibold text-slate-900">Start Date</Label>
+                                            <Label className="font-semibold text-slate-900">
+                                                Start Date
+                                                <span className="text-red-700">*</span>
+                                            </Label>
                                             <Input
                                                 type="date"
                                                 autoComplete="off"
