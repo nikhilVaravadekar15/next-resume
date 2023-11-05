@@ -1,10 +1,16 @@
 "use client"
 
 import {
+    Info,
     Trash2,
     PlusSquare,
 } from 'lucide-react';
-import { z } from 'zod';
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger,
+} from "@/components/ui/tooltip"
 import React from 'react';
 import { certificate } from "@/data";
 import { Label } from '@/components/ui/label';
@@ -53,7 +59,21 @@ export default function CertificationStep() {
             })}
         >
             <div className="p-4 flex items-center justify-between">
-                <span className="text-base font-medium">Completed Certifications</span>
+                <span className="text-base font-medium flex gap-2 items-center justify-center">
+                    Completed Certifications
+                    <TooltipProvider>
+                        <Tooltip>
+                            <TooltipTrigger asChild>
+                                <Info className="cursor-pointer" />
+                            </TooltipTrigger>
+                            <TooltipContent className="w-64">
+                                <p className="p-2">
+                                    {"Certifications (if applicable): List any certifications that are relevant to your field."}
+                                </p>
+                            </TooltipContent>
+                        </Tooltip>
+                    </TooltipProvider>
+                </span>
                 <Button
                     onClick={() => {
                         append(certificate)

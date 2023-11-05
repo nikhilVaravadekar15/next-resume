@@ -1,10 +1,16 @@
 "use client"
 
 import {
+    Info,
     Trash2,
     PlusSquare,
 } from 'lucide-react';
-import { z } from 'zod';
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger,
+} from "@/components/ui/tooltip"
 import React from 'react';
 import { skill } from "@/data";
 import { Label } from '@/components/ui/label';
@@ -51,7 +57,21 @@ export default function SkillsStep() {
             })}
         >
             <div className="p-4 flex items-center justify-between">
-                <span className="text-base font-medium">Enter skills</span>
+                <span className="text-base font-medium flex gap-2 items-center justify-center">
+                    Enter skills
+                    <TooltipProvider>
+                        <Tooltip>
+                            <TooltipTrigger asChild>
+                                <Info className="cursor-pointer" />
+                            </TooltipTrigger>
+                            <TooltipContent className="w-64">
+                                <p className="p-2">
+                                    {"Skills (if applicable): Mention any relevant skills, both technical and soft skills, that are applicable to the job you're targeting."}
+                                </p>
+                            </TooltipContent>
+                        </Tooltip>
+                    </TooltipProvider>
+                </span>
                 <Button
                     onClick={() => {
                         append(skill)

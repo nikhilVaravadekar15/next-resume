@@ -1,5 +1,14 @@
 "use client"
 
+import {
+    Info
+} from 'lucide-react';
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger,
+} from "@/components/ui/tooltip"
 import React from 'react'
 import { useForm } from "react-hook-form";
 import { Label } from '@/components/ui/label';
@@ -30,6 +39,23 @@ export default function ApplyingforStep() {
                 setActiveStep(step + 1)
             })}
         >
+            <div className="p-4 flex items-center justify-between">
+                <span className="text-base font-medium flex gap-2 items-center justify-center">
+                    Applying for job
+                    <TooltipProvider>
+                        <Tooltip>
+                            <TooltipTrigger asChild>
+                                <Info className="cursor-pointer" />
+                            </TooltipTrigger>
+                            <TooltipContent className="w-64">
+                                <p className="p-2">
+                                    {"The description of the job you're applying for"}
+                                </p>
+                            </TooltipContent>
+                        </Tooltip>
+                    </TooltipProvider>
+                </span>
+            </div>
             <div className="p-4 grid gap-2 grid-cols-1">
                 <div className="flex gap-2 flex-col justify-start">
                     <Label className="font-semibold text-slate-900">

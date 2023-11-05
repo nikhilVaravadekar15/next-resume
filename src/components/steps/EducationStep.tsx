@@ -1,10 +1,16 @@
 "use client"
 
 import {
+    Info,
     Trash2,
     PlusSquare,
 } from 'lucide-react';
-import { z } from 'zod';
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger,
+} from "@/components/ui/tooltip"
 import React from 'react';
 import { education } from "@/data";
 import { Label } from '@/components/ui/label';
@@ -53,7 +59,21 @@ export default function EducationStep() {
             })}
         >
             <div className="p-4 flex items-center justify-between">
-                <span className="text-base font-medium">Enter education details</span>
+                <span className="text-base font-medium flex gap-2 items-center justify-center">
+                    Enter education details
+                    <TooltipProvider>
+                        <Tooltip>
+                            <TooltipTrigger asChild>
+                                <Info className="cursor-pointer" />
+                            </TooltipTrigger>
+                            <TooltipContent className="w-64">
+                                <p className="p-2">
+                                    {"Education: List your educational background, including the degrees you've earned, the institutions you attended, and the graduation dates."}
+                                </p>
+                            </TooltipContent>
+                        </Tooltip>
+                    </TooltipProvider>
+                </span>
                 <Button
                     onClick={() => {
                         append(education)

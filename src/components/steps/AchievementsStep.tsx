@@ -1,9 +1,16 @@
 "use client"
 
 import {
+    Info,
     Trash2,
     PlusSquare,
 } from 'lucide-react';
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger,
+} from "@/components/ui/tooltip"
 import React from 'react'
 import { achievement } from "@/data";
 import { Label } from '@/components/ui/label';
@@ -50,7 +57,21 @@ export default function AchievementsStep() {
             })}
         >
             <div className="p-4 flex items-center justify-between">
-                <span className="text-base font-medium">Enter achievements</span>
+                <span className="text-base font-medium flex gap-2 items-center justify-center">
+                    Enter achievements
+                    <TooltipProvider>
+                        <Tooltip>
+                            <TooltipTrigger asChild>
+                                <Info className="cursor-pointer" />
+                            </TooltipTrigger>
+                            <TooltipContent className="w-64">
+                                <p className="p-2">
+                                    {"Achievements (if applicable): Highlight any awards, recognitions, or notable achievements in your career."}
+                                </p>
+                            </TooltipContent>
+                        </Tooltip>
+                    </TooltipProvider>
+                </span>
                 <Button
                     onClick={() => {
                         append(achievement)

@@ -1,9 +1,16 @@
 "use client"
 
 import {
+    Info,
     Trash2,
     PlusSquare,
 } from 'lucide-react';
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger,
+} from "@/components/ui/tooltip"
 import React from 'react';
 import { experience } from "@/data";
 import { experienceFormSchema } from '@/zod';
@@ -51,7 +58,21 @@ export default function ExperienceStep() {
             })}
         >
             <div className="p-4 flex items-center justify-between">
-                <span className="text-base font-medium">Enter experience</span>
+                <span className="text-base font-medium flex gap-2 items-center justify-center">
+                    Enter experience
+                    <TooltipProvider>
+                        <Tooltip>
+                            <TooltipTrigger asChild>
+                                <Info className="cursor-pointer" />
+                            </TooltipTrigger>
+                            <TooltipContent className="w-64">
+                                <p className="p-2">
+                                    {"Work Experience (if applicable): Include your work history, starting with the most recent job. Provide the job title, company name, dates of employment (start and end), and a brief description of your responsibilities and achievements."}
+                                </p>
+                            </TooltipContent>
+                        </Tooltip>
+                    </TooltipProvider>
+                </span>
                 <Button
                     onClick={() => {
                         append(experience)
