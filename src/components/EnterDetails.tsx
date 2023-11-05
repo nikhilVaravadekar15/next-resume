@@ -10,8 +10,9 @@ import EducationStep from '@/components/steps/EducationStep';
 import SkillsStep from '@/components/steps/SkillsStep';
 import ProjectStep from '@/components/steps/ProjectStep';
 import GenerateStep from '@/components/steps/GenerateStep';
+import ApplyingforStep from '@/components/steps/ApplyingforStep';
 import CertificationStep from '@/components/steps/CertificationStep';
-import { ActiveStepContext } from './providers/ActiveStepContext';
+import { ActiveStepContext } from '@/components/providers/ActiveStepContext';
 
 
 export default function EnterDetails() {
@@ -31,7 +32,8 @@ export default function EnterDetails() {
             case 4: return <ProjectStep />;
             case 5: return <CertificationStep />;
             case 6: return <ExperienceStep />;
-            case 7: return <GenerateStep />;
+            case 7: return <ApplyingforStep />;
+            case 8: return <GenerateStep />;
             default: return null;
         }
     }
@@ -45,7 +47,6 @@ export default function EnterDetails() {
                 <Stepper
                     steps={steps}
                     activeStep={step}
-                    // lineMarginOffset={8}
                     titleFontSize={14}
                 />
                 <div>

@@ -11,8 +11,12 @@ import PdfRenderer from "@/components/PdfRenderer";
 import EnterDetails from "@/components/EnterDetails";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import { FormContext } from "@/components/providers/FormContext";
-import { TAboutSection, TEducation, TExperience, TDescriptor, TProject, TForm } from "@/types";
-import { aboutSection, education, skill, achievement, project, certificate, experience } from "@/data";
+import {
+  TAboutSection, TEducation, TExperience, TDescriptor, TProject, TForm, TApplyfor
+} from "@/types";
+import {
+  aboutSection, education, skill, achievement, project, certificate, experience, applyfor
+} from "@/data";
 
 
 export default function Home() {
@@ -24,6 +28,7 @@ export default function Home() {
   const [projectFields, setProjectFields] = React.useState<TProject[]>([project])
   const [certificatesFields, setCertificatesFields] = React.useState<TDescriptor[]>([certificate])
   const [experienceFields, setExperienceFields] = React.useState<TExperience[]>([experience])
+  const [applyforFields, SetApplyforFields] = React.useState<TApplyfor>(applyfor)
 
   // mutation
   const { isLoading, isError, isSuccess, error, mutate, data: response } = useMutation({
@@ -60,6 +65,10 @@ export default function Home() {
     setExperienceFields(data)
   }
 
+  function setApplyingfor(data: TApplyfor) {
+    SetApplyforFields(data)
+  }
+
   async function mutation(form: TForm) {
     mutate(form)
   }
@@ -73,6 +82,7 @@ export default function Home() {
       project: projectFields, setProjects: setProjects,
       certificates: certificatesFields, setCertificates: setCertificates,
       experiences: experienceFields, setExperiences: setExperiences,
+      applyingfor: applyforFields, setApplyingfor: setApplyingfor,
       mutation: mutation
     }}>
       <main className="h-screen w-screen flex items-center justify-center">

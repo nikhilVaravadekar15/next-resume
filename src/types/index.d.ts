@@ -7,7 +7,7 @@ import {
     achievementsFormSchema,
     project, projectFormSchema,
     certificateFormSchema,
-    experience, experienceFormSchema
+    experience, experienceFormSchema, applyingfor
 } from '@/zod/index';
 
 export type TStep = {
@@ -36,6 +36,8 @@ export type TExperience = z.infer<typeof experience>
 
 export type TExperiences = z.infer<typeof experienceFormSchema>
 
+export type TApplyfor = z.infer<typeof applyingfor>
+
 export type TActiveStepContext = {
     step: number
     setActiveStep: (index: number) => void
@@ -49,6 +51,7 @@ export type TForm = {
     project?: Tproject[]
     certificates?: TDescriptor[]
     experiences?: TExperience[]
+    applyingfor: TApplyfor
 }
 
 export type TFormContext = TForm & {
@@ -59,5 +62,6 @@ export type TFormContext = TForm & {
     setProjects: (data: Tproject[]) => void
     setCertificates: (data: TDescriptor[]) => void
     setExperiences: (data: TExperience[]) => void
+    setApplyingfor: (data: TApplyfor) => void
     mutation: (form: TForm) => void
 }

@@ -1,6 +1,6 @@
 import { createContext } from "react";
 import { TFormContext } from "@/types";
-import { aboutSection, achievement, certificate, education, experience, project, skill } from "@/data";
+import { aboutSection, achievement, applyfor, certificate, education, experience, project, skill } from "@/data";
 
 
 export const FormContext = createContext<TFormContext>({
@@ -18,5 +18,7 @@ export const FormContext = createContext<TFormContext>({
     setCertificates: () => { },
     experiences: [experience],
     setExperiences: () => { },
+    applyingfor: applyfor,
+    setApplyingfor: () => { },
     mutation: () => { }
 });

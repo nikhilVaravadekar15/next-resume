@@ -1,10 +1,11 @@
 import {
     TDescriptor,
-    TEducation,
     TExperience,
+    TEducation,
     TStep,
-    TAboutSection,
-    TProject
+    TProject,
+    TApplyfor,
+    TAboutSection
 } from "@/types";
 
 export const steps: TStep[] = [
@@ -15,6 +16,7 @@ export const steps: TStep[] = [
     { title: "Projects" },
     { title: "Certification" },
     { title: "Experience" },
+    { title: "Applying for" },
     { title: "Generate" },
 ];
 
@@ -61,4 +63,8 @@ export const experience: TExperience = {
     startDate: "",
     endDate: "",
     description: ""
+}
+
+export const applyfor: TApplyfor = {
+    designation: ""
 }

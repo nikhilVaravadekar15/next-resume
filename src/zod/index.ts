@@ -96,3 +96,15 @@ export const experience = z.object({
 export const experienceFormSchema = z.object({
     experienceArray: experience.array()
 })
+
+export const applyingfor = z.object({
+    designation: z.string()
+        .min(1, "Required")
+        .max(256, "Designation must be less than 256 characters"),
+    org: z.string()
+        .optional(),
+    location: z.string()
+        .optional(),
+    description: z.string()
+        .optional()
+})
