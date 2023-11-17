@@ -2,6 +2,14 @@
   "name": "next-resume",
   "version": "0.1.0",
   "private": true,
+  "author": {
+    "name": "nikhilVaravadekar15",
+    "url": "https://github.com/nikhilVaravadekar15"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nikhilVaravadekar15/next-resume.git"
+  }, 
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -11,7 +19,9 @@
   "dependencies": {
     "@hookform/resolvers": "^3.3.2",
     "@radix-ui/react-label": "^2.0.2",
+    "@radix-ui/react-select": "^2.0.0",
     "@radix-ui/react-slot": "^1.0.2",
+    "@radix-ui/react-toast": "^1.1.5",
     "@radix-ui/react-tooltip": "^1.0.7",
     "axios": "^1.5.1",
     "class-variance-authority": "^0.7.0",
@@ -19,6 +29,7 @@
     "lucide-react": "^0.287.0",
     "next": "13.5.4",
     "npm": "^10.2.1",
+    "openai-edge": "^1.2.2",
     "react": "^18",
     "react-dom": "^18",
     "react-hook-form": "^7.47.0",

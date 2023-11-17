@@ -2,8 +2,24 @@
 
 import {
     ArrowBigLeft,
-    ArrowBigRight
+    ArrowBigRight,
+    Info
 } from 'lucide-react'
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger,
+} from "@/components/ui/tooltip"
+import {
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectLabel,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select"
 import {
     Card,
     CardContent,
@@ -16,6 +32,7 @@ import { Button } from '@/components/ui/button';
 import { FormContext } from '@/components/providers/FormContext';
 import { TFormContext, TActiveStepContext } from '@/types/index';
 import { ActiveStepContext } from '@/components/providers/ActiveStepContext';
+
 
 const slogans: string[] = [
     "Crafting Careers, One Word at a Time",
@@ -33,7 +50,8 @@ const slogans: string[] = [
 export default function GenerateStep() {
 
     const {
-        aboutSection, educations, skills, achievement, project, certificates, experiences,
+        aboutSection, educations, skills, achievement, project, certificates, experiences, applyingfor,
+        responsetype, setResponsetype,
         mutation
     } = React.useContext<TFormContext>(FormContext)
     const { step, setActiveStep } = React.useContext<TActiveStepContext>(ActiveStepContext)
@@ -60,12 +78,53 @@ export default function GenerateStep() {
                         }
                     </CardDescription>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="w-full flex gap-6 flex-col items-center justify-center">
+                    <div className="w-full flex gap-2 items-center justify-evenly">
+                        <div className="flex flex-col gap-2 lg:flex-row">
+                            Select the appropriate response type
+                            <TooltipProvider>
+                                <Tooltip>
+                                    <TooltipTrigger asChild>
+                                        <Info className="cursor-pointer" />
+                                    </TooltipTrigger>
+                                    <TooltipContent className="w-72">
+                                        <p className="p-2">
+                                            {"This will help chatgpt to make a formal, concise, and positive resume, also it will be easier for you to convert the response into a beautiful and professionally formatted document."}
+                                        </p>
+                                    </TooltipContent>
+                                </Tooltip>
+                            </TooltipProvider>
+                        </div>
+                        <Select onValueChange={(value: string) => {
+                            setResponsetype({
+                                type: value
+                            })
+                        }}>
+                            <SelectTrigger className="w-[180px]">
+                                <SelectValue placeholder="Response type" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectGroup>
+                                    <SelectLabel>Types</SelectLabel>
+                                    <SelectItem value="latex">Latex</SelectItem>
+                                    <SelectItem value="markdown">Markdown</SelectItem>
+                                </SelectGroup>
+                            </SelectContent>
+                        </Select>
+                    </div>
                     <Button
                         variant={"outline"}
                         onClick={() => {
                             mutation({
-                                aboutSection, educations, skills, achievement, project, certificates, experiences
+                                aboutSection,
+                                educations,
+                                skills,
+                                achievement,
+                                project,
+                                certificates,
+                                experiences,
+                                applyingfor,
+                                responsetype
                             })
                         }}
                         className="text-gray-100 bg-red-400 hover:text-white hover:bg-red-500"
@@ -74,7 +133,7 @@ export default function GenerateStep() {
                         <ArrowBigRight />
                     </Button>
                 </CardContent>
-            </Card>
+            </Card >
         </>
     )
 }

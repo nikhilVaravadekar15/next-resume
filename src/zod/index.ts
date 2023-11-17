@@ -108,3 +108,9 @@ export const applyingfor = z.object({
     description: z.string()
         .optional()
 })
+
+export const responsetype = z.object({
+    type: z.string()
+        .min(1, "Required")
+        .max(32, "Response type must be less than 32 characters"),
+})

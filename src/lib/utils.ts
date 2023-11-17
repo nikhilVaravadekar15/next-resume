@@ -1,7 +1,8 @@
 import {
-  TCertification,
   TDescriptor,
-  TEducation, TExperience, TForm, TProject
+  TEducation,
+  TExperience,
+  TForm, TProject
 } from "@/types"
 import { twMerge } from "tailwind-merge"
 import { type ClassValue, clsx } from "clsx"
@@ -27,7 +28,7 @@ export function getPrompt(form: TForm) {
   - make my resume easier to scan.
   - add appropriate buzzwords based on the context
 
-  then provide me the output in latex format.
+  then provide me the response in ${form.responsetype.type.toLowerCase()} format, This will make it easier for me to convert the information into a beautiful and professionally formatted document.
 
   Here's my information delimited by triple backticks:
   \`\`\`
@@ -35,7 +36,7 @@ export function getPrompt(form: TForm) {
   prompt = prompt + startinginfo
 
   const constactInfo: string = `1. Contact Information: ${form.aboutSection.firstname} ${form.aboutSection?.middlename} ${form.aboutSection.lastname}, Email: ${form.aboutSection.email}, Phone: ${form.aboutSection.phone}, ${form.aboutSection?.designation ? `current designation: ${form.aboutSection.designation}` : ""}, address: ${form.aboutSection.address}, ${form.aboutSection?.summary}`
-  prompt = prompt + constactInfo
+  prompt = prompt + constactInfo + `\n`
 
   let educationInfo: string = "Education: \n"
   for (let index = 0; index < form.educations.length; index++) {
@@ -50,7 +51,7 @@ export function getPrompt(form: TForm) {
       const skill: TDescriptor = form.skills[index];
       skillsInfo = skillsInfo + `${index + 1}: title: ${skill.title}, ${skill?.description ? skill.description : ""} \n`
     }
-    prompt = prompt + skillsInfo
+    prompt = prompt + skillsInfo + `\n`
   }
 
   if (form.achievement != undefined && form?.achievement.length != 0) {
@@ -66,9 +67,9 @@ export function getPrompt(form: TForm) {
     let projectsInfo: string = "Projects: \n"
     for (let index = 0; index < form.project.length; index++) {
       const project: TProject = form.project[index];
-      projectsInfo = projectsInfo + `${index + 1}: title: ${project.title},  ${project?.link ? `Link: ${project.link}` : ""}, ${project?.description ? `Description: ${project.description}` : ""} \n`
+      projectsInfo = projectsInfo + `${index + 1}: title: ${project.title},  ${project?.link ? `Link: ${project.link},` : ""} ${project?.description ? `Description: ${project.description}` : ""} \n`
     }
-    prompt = prompt + projectsInfo
+    prompt = prompt + projectsInfo + `\n`
   }
 
   if (form.certificates != undefined && form?.certificates.length != 0) {
@@ -77,7 +78,7 @@ export function getPrompt(form: TForm) {
       const certificate: TDescriptor = form.certificates[index];
       certificatesInfo = certificatesInfo + `${index + 1}: title: ${certificate.title},  ${certificate?.description ? `Description: ${certificate.description}` : ""} \n`
     }
-    prompt = prompt + certificatesInfo
+    prompt = prompt + certificatesInfo + `\n`
   }
 
   if (form.experiences != undefined && form?.experiences.length != 0) {
@@ -86,7 +87,7 @@ export function getPrompt(form: TForm) {
       const experience: TExperience = form.experiences[index];
       experiencesInfo = experiencesInfo + `${index + 1}: Position: ${experience.position}, Organization: ${experience.org}, Location: ${experience.location}, start-date: ${experience.startDate}, end-date: ${experience?.endDate ? experience.endDate : "ongoing"},  ${experience.description} \n`
     }
-    prompt = prompt + experiencesInfo
+    prompt = prompt + experiencesInfo + `\n`
   }
 
   prompt = prompt + "\n ``` \n"
