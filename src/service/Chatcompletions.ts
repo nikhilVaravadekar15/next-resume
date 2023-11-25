@@ -1,14 +1,14 @@
 /* eslint-disable import/no-anonymous-default-export */
-import { OpenAIApi, Configuration, ResponseTypes } from "openai-edge"
+import { OpenAIApi, Configuration, ResponseTypes, ModelError, ErrorResponse } from "openai-edge"
 
 
 class Chatcompletions {
     private openai: OpenAIApi | null = null;
 
-    constructor() {
+    constructor(key: string) {
         try {
 
-            const OPENAI_API_KEY: string = process.env.OPENAI_API_KEY!
+            const OPENAI_API_KEY: string = key
             if (!OPENAI_API_KEY) {
                 throw new Error("OPENAI_API_KEY is not defined")
             }
@@ -32,9 +32,11 @@ class Chatcompletions {
             ]
         })
 
-        return await completion?.json() as ResponseTypes["createChatCompletion"]
+        return completion?.status === 200 ?
+            await completion?.json() as ResponseTypes["createChatCompletion"]
+            : await completion?.json() as any
     }
 }
 
 
-export default new Chatcompletions();
+export default Chatcompletions

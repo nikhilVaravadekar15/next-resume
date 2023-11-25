@@ -8,7 +8,7 @@ import React from 'react'
 import { steps } from '@/data';
 import { Button } from '@/components/ui/button';
 import { TActiveStepContext } from '@/types/index';
-import { ActiveStepContext } from '@/components/providers/ActiveStepContext';
+import { ActiveStepContext } from '@/components/providers/ActiveStepContextProvider';
 
 
 export default function NavigationButtons() {

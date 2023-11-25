@@ -16,9 +16,10 @@ import { Input } from '@/components/ui/input';
 import { formSchema } from '@/zod/index'
 import { zodResolver } from "@hookform/resolvers/zod";
 import NavigationButtons from '@/components/NavigationButtons';
-import { FormContext } from '@/components/providers/FormContext';
-import { ActiveStepContext } from '@/components/providers/ActiveStepContext';
+import { FormContext } from '@/components/providers/FormContextProvider';
+import { ActiveStepContext } from '@/components/providers/ActiveStepContextProvider';
 import { TAboutSection, TActiveStepContext, TFormContext } from '@/types/index'
+import { Textarea } from '../ui/textarea';
 
 
 export default function AboutSectionStep() {
@@ -32,7 +33,7 @@ export default function AboutSectionStep() {
 
     return (
         <form
-            className="m-4 border rounded"
+            className="h-full"
             onSubmit={handleSubmit((data: TAboutSection) => {
                 setAboutSection(data)
                 setActiveStep(step + 1)
@@ -55,7 +56,7 @@ export default function AboutSectionStep() {
                     </TooltipProvider>
                 </span>
             </div>
-            <div className="p-4 grid gap-2 grid-cols-1">
+            <div className="p-4 grid gap-2 grid-cols-3">
                 <div className="flex gap-1 flex-col justify-start">
                     <Label className="font-semibold text-slate-900">
                         First name
@@ -105,7 +106,7 @@ export default function AboutSectionStep() {
                     }
                 </div>
             </div>
-            <div className="p-4 grid gap-2 grid-cols-1">
+            <div className="p-4 grid gap-2 grid-cols-2">
                 <div className="flex gap-1 flex-col justify-start">
                     <Label className="font-semibold text-slate-900">Designation</Label>
                     <Input
@@ -138,7 +139,7 @@ export default function AboutSectionStep() {
                     }
                 </div>
             </div>
-            <div className="p-4 grid gap-2 grid-cols-1">
+            <div className="p-4 grid gap-2 grid-cols-2">
                 <div className="flex gap-1 flex-col justify-start">
                     <Label className="font-semibold text-slate-900">
                         Email
@@ -173,12 +174,14 @@ export default function AboutSectionStep() {
                         )
                     }
                 </div>
+            </div>
+            <div className="p-4 grid gap-2 grid-cols-1">
                 <div className="flex gap-1 flex-col justify-start">
                     <Label className="font-semibold text-slate-900">Summary</Label>
-                    <Input
-                        type="text"
+                    <Textarea
                         autoComplete="off"
                         {...register("summary")}
+                        className="h-64 resize-none"
                     />
                     {
                         getFieldState("summary").isDirty && getFieldState("summary").isTouched && getFieldState("summary").error?.message && (

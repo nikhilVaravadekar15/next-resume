@@ -1,7 +1,8 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client"
 
 import {
-  ArrowBigLeft, Download
+  ArrowBigLeft, Copy, Download
 } from "lucide-react";
 import {
   Tooltip,
@@ -10,35 +11,57 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 import React from "react";
-import { generateResume } from "@/http";
+import { steps } from '@/data';
+import copy from 'copy-to-clipboard'
+import { generateResumeWithKey } from "@/http";
 import { useMutation } from "react-query";
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea"
 import { useToast } from "@/components/ui/use-toast"
-import EnterDetails from "@/components/EnterDetails";
+import Stepper from 'react-stepper-horizontal';
 import LoadingSpinner from "@/components/LoadingSpinner";
-import { FormContext } from "@/components/providers/FormContext";
-import {
-  TAboutSection, TEducation, TExperience, TDescriptor, TProject, TForm, TApplyfor, TResponsetype
-} from "@/types";
-import {
-  aboutSection, education, skill, achievement, project, certificate, experience, applyfor, responsetype
-} from "@/data";
+import AboutSectionStep from '@/components/steps/AboutSectionStep';
+import AchievementsStep from '@/components/steps/AchievementsStep';
+import ExperienceStep from '@/components/steps/ExperienceStep';
+import EducationStep from '@/components/steps/EducationStep';
+import SkillsStep from '@/components/steps/SkillsStep';
+import ProjectStep from '@/components/steps/ProjectStep';
+import GenerateStep from '@/components/steps/GenerateStep';
+import ApplyingforStep from '@/components/steps/ApplyingforStep';
+import CertificationStep from '@/components/steps/CertificationStep';
+import { KeyContext } from "@/components/providers/KeyContextProvider";
+import { ActiveStepContext } from '@/components/providers/ActiveStepContextProvider';
+import { FormContext } from "@/components/providers/FormContextProvider";
+import { TActiveStepContext, TApikeyContext, TForm, TFormContext } from '@/types';
 
 
 export default function Home() {
 
   const { toast } = useToast()
-  const [aboutSectionFields, setAboutSectionFields] = React.useState<TAboutSection>(aboutSection)
-  const [educationFields, setEducationFields] = React.useState<TEducation[]>([education])
-  const [skillFields, setSkillsFields] = React.useState<TDescriptor[]>([skill])
-  const [achievementsFields, setAchievementsFields] = React.useState<TDescriptor[]>([achievement])
-  const [projectFields, setProjectFields] = React.useState<TProject[]>([project])
-  const [certificatesFields, setCertificatesFields] = React.useState<TDescriptor[]>([certificate])
-  const [experienceFields, setExperienceFields] = React.useState<TExperience[]>([experience])
-  const [applyforFields, setApplyforFields] = React.useState<TApplyfor>(applyfor)
-  const [responsetypeField, setResponsetypeField] = React.useState<TResponsetype>(responsetype)
+  const { step } = React.useContext<TActiveStepContext>(ActiveStepContext)
+  const { withKey, key, setWithKey } = React.useContext<TApikeyContext>(KeyContext)
+  const {
+    aboutSection, educations, skills, achievement, project, certificates, experiences, applyingfor
+  } = React.useContext<TFormContext>(FormContext)
+
+  React.useEffect(() => {
+    if (withKey && key) {
+      mutate({
+        key: key,
+        form: {
+          aboutSection,
+          educations,
+          skills,
+          achievement,
+          project,
+          certificates,
+          experiences,
+          applyingfor
+        }
+      })
+    }
+  }, [withKey, key]);
 
   React.useEffect(() => {
     const unloadCallback = (event: any) => {
@@ -53,11 +76,12 @@ export default function Home() {
 
   // mutation
   const { isLoading, isError, isSuccess, error, mutate, data: response } = useMutation({
-    mutationFn: async (form: TForm) => {
-      return await generateResume(form)
+    mutationFn: async ({ key, form }: { key: string, form: TForm }) => {
+      return await generateResumeWithKey(key, form)
     },
     onError: (error) => {
       console.log(error)
+      setWithKey(false)
       toast({
         variant: "destructive",
         title: "Something went wrong, please try again later",
@@ -78,167 +102,137 @@ export default function Home() {
     }
   })
 
-  function setAboutSection(data: TAboutSection) {
-    setAboutSectionFields(data)
-  }
-
-  function setEducations(data: TEducation[]) {
-    setEducationFields(data)
-  }
-
-  function setSkills(data: TDescriptor[]) {
-    setSkillsFields(data)
-  }
-
-  function setAchievements(data: TDescriptor[]) {
-    setAchievementsFields(data)
-  }
-
-  function setProjects(data: TProject[]) {
-    setProjectFields(data)
-  }
-
-  function setCertificates(data: TDescriptor[]) {
-    setCertificatesFields(data)
-  }
-
-  function setExperiences(data: TExperience[]) {
-    setExperienceFields(data)
-  }
-
-  function setApplyingfor(data: TApplyfor) {
-    setApplyforFields(data)
-  }
-
-  function setResponsetype(data: TResponsetype) {
-    setResponsetypeField(data)
-  }
-
-  async function mutation(form: TForm) {
-    mutate(form)
+  function getSectionComponent() {
+    switch (step) {
+      case 0: return <AboutSectionStep />;
+      case 1: return <EducationStep />;
+      case 2: return <SkillsStep />;
+      case 3: return <AchievementsStep />;
+      case 4: return <ProjectStep />;
+      case 5: return <CertificationStep />;
+      case 6: return <ExperienceStep />;
+      case 7: return <ApplyingforStep />;
+      case 8: return <GenerateStep />;
+      default: return null;
+    }
   }
 
   return (
-    <FormContext.Provider value={{
-      aboutSection: aboutSectionFields, setAboutSection: setAboutSection,
-      educations: educationFields, setEducations: setEducations,
-      skills: skillFields, setSkills: setSkills,
-      achievement: achievementsFields, setAchievements: setAchievements,
-      project: projectFields, setProjects: setProjects,
-      certificates: certificatesFields, setCertificates: setCertificates,
-      experiences: experienceFields, setExperiences: setExperiences,
-      applyingfor: applyforFields, setApplyingfor: setApplyingfor,
-      responsetype: responsetypeField, setResponsetype: setResponsetype,
-      mutation: mutation
-    }}>
-      <main className="h-screen w-screen flex items-center justify-center">
-        <div className="h-full w-[80%]">
-          {
-            isLoading ? (
-              <div className="h-full w-full flex gap-2 flex-col items-center justify-center">
-                <LoadingSpinner />
-                <span className="text-sm text-slate-700">GPT is working hard</span>
-              </div>
-            ) : (
-              !isSuccess ? (
-                <>
-                  <EnterDetails />
-                </>
-              ) : (
-                <>
-                  <Button
-                    variant={"outline"}
-                    onClick={() => {
-                      window.location.reload();
-                    }}
-                    className="absolute left-0 top-0 h-full w-[48px] flex items-center justify-center text-gray-600 bg-blue-100 rounded-none hover:text-white hover:bg-blue-300"
-                  >
-                    <ArrowBigLeft />
-                  </Button>
-                  <div className="p-2 h-full w-full flex gap-1 items-center justify-center">
-                    <div className="h-full w-full flex gap-1 flex-col justify-center">
-                      <div className="flex items-center justify-between">
-                        <Badge
-                          variant="secondary"
-                          className="w-fit cursor-pointer"
-                        >
-                          Prompt
-                        </Badge>
-                        <TooltipProvider>
-                          <Tooltip>
-                            <TooltipTrigger asChild>
-                              <Button
-                                variant="outline"
-                                className="h-8 rounded-full"
-                                onClick={() => {
-                                  const element = document.createElement("a");
-                                  const file = new Blob([response?.data.prompt]);
-                                  element.href = URL.createObjectURL(file);
-                                  element.download = "prompt.md";
-                                  document.body.appendChild(element); // Required for this to work in FireFox
-                                  element.click();
-                                }}
-                              >
-                                <Download className="h-full w-full" />
-                              </Button>
-                            </TooltipTrigger>
-                            <TooltipContent>
-                              <p>Download the Chatgpt prompt</p>
-                            </TooltipContent>
-                          </Tooltip>
-                        </TooltipProvider>
-                      </div>
-                      <Textarea
-                        readOnly={true}
-                        value={response?.data.prompt}
-                        className="h-full resize-none ring-1"
-                      />
+    <main className="h-screen w-screen flex items-center justify-center">
+      <div className="h-full w-[80%]">
+        {
+          isLoading ? (
+            <div className="h-full w-full flex gap-2 flex-col items-center justify-center">
+              <LoadingSpinner />
+              <span className="text-sm text-slate-700">GPT is working hard</span>
+            </div>
+          ) : (
+            withKey && !isError && isSuccess ? (
+              <>
+                <Button
+                  variant={"outline"}
+                  onClick={() => {
+                    window.location.reload();
+                  }}
+                  className="absolute left-0 top-0 h-full w-[48px] flex items-center justify-center text-gray-600 bg-blue-100 rounded-none hover:text-white hover:bg-blue-300"
+                >
+                  <ArrowBigLeft />
+                </Button>
+                <div className="p-2 h-full w-full flex gap-1 items-center justify-center">
+                  <div className="h-full w-full flex gap-1 flex-col justify-center">
+                    <div className="flex items-center justify-between">
+                      <Badge
+                        variant="secondary"
+                        className="w-fit cursor-pointer"
+                      >
+                        Prompt
+                      </Badge>
+                      <TooltipProvider>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <Button
+                              variant="outline"
+                              className="h-8 rounded-full"
+                              onClick={() => {
+                                copy(response?.data?.prompt)
+                              }}
+                            >
+                              <Copy className="h-full w-full" />
+                            </Button>
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p className="p-2">
+                              Copy the Chatgpt prompt
+                            </p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
                     </div>
-                    <div className="h-full w-full flex gap-1 flex-col justify-center">
-                      <div className="flex items-center justify-between">
-                        <Badge
-                          variant="secondary"
-                          className="w-fit cursor-pointer"
-                        >
-                          Response
-                        </Badge>
-                        <TooltipProvider>
-                          <Tooltip>
-                            <TooltipTrigger asChild>
-                              <Button
-                                variant="outline"
-                                className="h-8 rounded-full"
-                                onClick={() => {
-                                  const element = document.createElement("a");
-                                  const file = new Blob([response?.data.content]);
-                                  element.href = URL.createObjectURL(file);
-                                  element.download = responsetype.type === "latex" ? "response.tex" : "response.md";
-                                  document.body.appendChild(element); // Required for this to work in FireFox
-                                  element.click();
-                                }}
-                              >
-                                <Download className="h-full w-full" />
-                              </Button>
-                            </TooltipTrigger>
-                            <TooltipContent>
-                              <p>Download the {responsetype.type} to your desired file format.</p>
-                            </TooltipContent>
-                          </Tooltip>
-                        </TooltipProvider>
-                      </div>
-                      <Textarea
-                        readOnly={true}
-                        value={response?.data.content}
-                        className="h-full text-base ring-1 resize-none"
-                      />
-                    </div>
+                    <Textarea
+                      readOnly={true}
+                      value={response?.data?.prompt}
+                      className="h-full resize-none ring-1"
+                    />
                   </div>
-                </>
-              )
+                  <div className="h-full w-full flex gap-1 flex-col justify-center">
+                    <div className="flex items-center justify-between">
+                      <Badge
+                        variant="secondary"
+                        className="w-fit cursor-pointer"
+                      >
+                        Response
+                      </Badge>
+                      <TooltipProvider>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <Button
+                              variant="outline"
+                              className="h-8 rounded-full"
+                              onClick={() => {
+                                const element = document.createElement("a");
+                                const file = new Blob([response?.data?.content]);
+                                element.href = URL.createObjectURL(file);
+                                element.download = "response.tex"
+                                document.body.appendChild(element); // Required for this to work in FireFox
+                                element.click();
+                              }}
+                            >
+                              <Download className="h-full w-full" />
+                            </Button>
+                          </TooltipTrigger>
+                          <TooltipContent className="w-64">
+                            <p className="p-2">
+                              Download and convert the latex file to pdf using any latex-to-pdf converter of your choice.
+                            </p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
+                    </div>
+                    <Textarea
+                      readOnly={true}
+                      value={response?.data?.content}
+                      className="h-full text-base ring-1 resize-none"
+                    />
+                  </div>
+                </div>
+              </>
+            ) : (
+              <div className="p-2 h-full w-full flex gap-1 flex-col overflow-y-scroll">
+                <div className="h-[96px] border rounded shadow">
+                  <Stepper
+                    steps={steps}
+                    activeStep={step}
+                    titleFontSize={14}
+                  />
+                </div>
+                <div className="h-[calc(100%-96px)]">
+                  {getSectionComponent()}
+                </div>
+              </div>
             )
-          }
-        </div>
-      </main>
-    </FormContext.Provider>
+          )
+        }
+      </div>
+    </main >
   )
 }

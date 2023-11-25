@@ -17,9 +17,10 @@ import { applyingfor } from '@/zod/index'
 import { Textarea } from "@/components/ui/textarea";
 import { zodResolver } from "@hookform/resolvers/zod";
 import NavigationButtons from '@/components/NavigationButtons';
-import { FormContext } from '@/components/providers/FormContext';
-import { ActiveStepContext } from '@/components/providers/ActiveStepContext';
+import { FormContext } from '@/components/providers/FormContextProvider';
 import { TApplyfor, TActiveStepContext, TFormContext } from '@/types/index'
+import { ActiveStepContext } from '@/components/providers/ActiveStepContextProvider';
+
 
 
 export default function ApplyingforStep() {
@@ -33,7 +34,7 @@ export default function ApplyingforStep() {
 
     return (
         <form
-            className="m-4 border rounded"
+            className="h-full"
             onSubmit={handleSubmit((data: TApplyfor) => {
                 setApplyingfor(data)
                 setActiveStep(step + 1)
@@ -56,7 +57,7 @@ export default function ApplyingforStep() {
                     </TooltipProvider>
                 </span>
             </div>
-            <div className="p-4 grid gap-2 grid-cols-1">
+            <div className="p-4 grid gap-4 grid-cols-1">
                 <div className="flex gap-2 flex-col justify-start">
                     <Label className="font-semibold text-slate-900">
                         Job designation
@@ -110,6 +111,7 @@ export default function ApplyingforStep() {
                     <Textarea
                         autoComplete="off"
                         {...register("description")}
+                        className="h-64 resize-none"
                     />
                     {
                         getFieldState("description").isDirty && getFieldState("description").isTouched && getFieldState("description").error?.message && (

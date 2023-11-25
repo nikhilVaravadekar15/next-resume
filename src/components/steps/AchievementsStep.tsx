@@ -20,8 +20,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useFieldArray, useForm } from 'react-hook-form';
 import NavigationButtons from '@/components/NavigationButtons';
 import { TAchievements, TActiveStepContext, TFormContext } from '@/types/index'
-import { FormContext } from '@/components/providers/FormContext';
-import { ActiveStepContext } from '@/components/providers/ActiveStepContext';
+import { FormContext } from '@/components/providers/FormContextProvider';
+import { ActiveStepContext } from '@/components/providers/ActiveStepContextProvider';
 import { achievementsFormSchema } from '@/zod';
 
 
@@ -50,7 +50,7 @@ export default function AchievementsStep() {
 
     return (
         <form
-            className="m-4 border rounded"
+            className="h-full"
             onSubmit={handleSubmit((data: TAchievements) => {
                 setAchievements(data.achievementsArray)
                 setActiveStep(step + 1)
@@ -99,7 +99,7 @@ export default function AchievementsStep() {
                                         <Trash2 color={"red"} />
                                     </Button>
                                 </div>
-                                <div className="grid gap-2 grid-cols-1">
+                                <div className="grid gap-2 grid-cols-2">
                                     <div className="flex gap-1 flex-col justify-start">
                                         <Label className="font-semibold text-slate-900">
                                             Title
@@ -108,7 +108,7 @@ export default function AchievementsStep() {
                                         <Input
                                             type="text"
                                             autoComplete="off"
-                                            placeholder="e.g. Bravo, team player"
+                                            placeholder="e.g. Bravo"
                                             {...register(`achievementsArray.${index}.title` as const, { required: true })}
                                         />
                                         {

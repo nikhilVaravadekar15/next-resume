@@ -10,10 +10,13 @@ export const axiosRequestConfig: AxiosRequestConfig = {
     }
 }
 
-export async function generateResume(form: TForm) {
+export async function generateResumeWithKey(key: string, form: TForm) {
     return await axios.post(
         "/api/generate-resume",
-        form,
+        {
+            key: key,
+            form: form
+        },
         axiosRequestConfig
     )
 }

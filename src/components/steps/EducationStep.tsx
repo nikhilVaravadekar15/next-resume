@@ -20,8 +20,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useFieldArray, useForm } from 'react-hook-form';
 import NavigationButtons from '@/components/NavigationButtons';
 import { TActiveStepContext, TEducations, TFormContext } from '@/types/index'
-import { FormContext } from '@/components/providers/FormContext';
-import { ActiveStepContext } from '@/components/providers/ActiveStepContext';
+import { FormContext } from '@/components/providers/FormContextProvider';
+import { ActiveStepContext } from '@/components/providers/ActiveStepContextProvider';
 import { educationFormSchema } from '@/zod';
 
 
@@ -52,7 +52,7 @@ export default function EducationStep() {
 
     return (
         <form
-            className="m-4 border rounded"
+            className="h-full"
             onSubmit={handleSubmit((data: TEducations) => {
                 setEducations(data.educationArray)
                 setActiveStep(step + 1)
@@ -106,7 +106,7 @@ export default function EducationStep() {
                                     }
                                 </div>
                                 <div className="flex gap-5 flex-col">
-                                    <div className="grid gap-2 grid-cols-1">
+                                    <div className="grid gap-2 grid-cols-3">
                                         <div className="flex gap-1 flex-col justify-start">
                                             <Label className="font-semibold text-slate-900">
                                                 School / College
@@ -156,7 +156,7 @@ export default function EducationStep() {
                                             }
                                         </div>
                                     </div>
-                                    <div className="grid gap-2 grid-cols-1">
+                                    <div className="grid gap-2 grid-cols-2">
                                         <div className="flex gap-1 flex-col justify-start">
                                             <Label className="font-semibold text-slate-900">
                                                 Start Date
@@ -186,6 +186,8 @@ export default function EducationStep() {
                                                 )
                                             }
                                         </div>
+                                    </div>
+                                    <div className="grid gap-2 grid-cols-1">
                                         <div className="flex gap-1 flex-col justify-start">
                                             <Label className="font-semibold text-slate-900">Description</Label>
                                             <Input

@@ -5,8 +5,7 @@ import {
     TStep,
     TProject,
     TApplyfor,
-    TAboutSection,
-    TResponsetype
+    TAboutSection
 } from "@/types";
 
 
@@ -69,8 +68,4 @@ export const experience: TExperience = {
 
 export const applyfor: TApplyfor = {
     designation: ""
-}
-
-export const responsetype: TResponsetype = {
-    type: "latex"
 }

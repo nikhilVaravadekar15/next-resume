@@ -21,8 +21,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useFieldArray, useForm } from 'react-hook-form';
 import NavigationButtons from '@/components/NavigationButtons';
 import { TActiveStepContext, TExperiences, TFormContext } from '@/types/index';
-import { FormContext } from '@/components/providers/FormContext';
-import { ActiveStepContext } from '@/components/providers/ActiveStepContext';
+import { FormContext } from '@/components/providers/FormContextProvider';
+import { ActiveStepContext } from '@/components/providers/ActiveStepContextProvider';
 
 
 export default function ExperienceStep() {
@@ -51,7 +51,7 @@ export default function ExperienceStep() {
 
     return (
         <form
-            className="m-4 border rounded"
+            className="h-full"
             onSubmit={handleSubmit((data: TExperiences) => {
                 setExperiences(data.experienceArray)
                 setActiveStep(step + 1)
@@ -101,7 +101,7 @@ export default function ExperienceStep() {
                                     </Button>
                                 </div>
                                 <div className="flex gap-5 flex-col">
-                                    <div className="grid gap-2 grid-cols-1">
+                                    <div className="grid gap-2 grid-cols-3">
                                         <div className="flex gap-1 flex-col justify-start">
                                             <Label className="font-semibold text-slate-900">
                                                 Position
@@ -149,7 +149,7 @@ export default function ExperienceStep() {
                                             }
                                         </div>
                                     </div>
-                                    <div className="grid gap-2 grid-cols-1">
+                                    <div className="grid gap-2 grid-cols-2">
                                         <div className="flex gap-1 flex-col justify-start">
                                             <Label className="font-semibold text-slate-900">
                                                 Start Date
@@ -179,6 +179,8 @@ export default function ExperienceStep() {
                                                 )
                                             }
                                         </div>
+                                    </div>
+                                    <div className="grid gap-2 grid-cols-1">
                                         <div className="flex gap-1 flex-col justify-start">
                                             <Label className="font-semibold text-slate-900">Description</Label>
                                             <Input

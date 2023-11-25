@@ -2,6 +2,10 @@ import './globals.css'
 import type { Metadata } from 'next'
 import { Toaster } from "@/components/ui/toaster"
 import ReactQueryProvider from '@/components/providers/ReactQueryProvider'
+import FormContextProvider from '@/components/providers/FormContextProvider'
+import ActiveStepContextProvider from '@/components/providers/ActiveStepContextProvider'
+import KeyContextProvider from '@/components/providers/KeyContextProvider'
+
 
 export const metadata: Metadata = {
   title: "Next-resume",
@@ -25,7 +29,13 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <ReactQueryProvider>
-          {children}
+          <ActiveStepContextProvider>
+            <FormContextProvider>
+              <KeyContextProvider>
+                {children}
+              </KeyContextProvider>
+            </FormContextProvider>
+          </ActiveStepContextProvider>
           <Toaster />
         </ReactQueryProvider>
       </body>

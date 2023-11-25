@@ -20,8 +20,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useFieldArray, useForm } from 'react-hook-form';
 import NavigationButtons from '@/components/NavigationButtons';
 import { TActiveStepContext, TCertification, TFormContext } from '@/types/index';
-import { FormContext } from '@/components/providers/FormContext';
-import { ActiveStepContext } from '@/components/providers/ActiveStepContext';
+import { FormContext } from '@/components/providers/FormContextProvider';
+import { ActiveStepContext } from '@/components/providers/ActiveStepContextProvider';
 import { certificateFormSchema } from '@/zod';
 
 
@@ -52,7 +52,7 @@ export default function CertificationStep() {
 
     return (
         <form
-            className="m-4 border rounded"
+            className="h-full"
             onSubmit={handleSubmit((data: TCertification) => {
                 setCertificates(data.certs)
                 setActiveStep(step + 1)
@@ -101,7 +101,7 @@ export default function CertificationStep() {
                                         <Trash2 color={"red"} />
                                     </Button>
                                 </div>
-                                <div className="grid gap-2 grid-cols-1">
+                                <div className="grid gap-2 grid-cols-2">
                                     <div className="flex gap-1 flex-col justify-start">
                                         <Label className="font-semibold text-slate-900">
                                             Title

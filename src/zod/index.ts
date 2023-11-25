@@ -109,8 +109,8 @@ export const applyingfor = z.object({
         .optional()
 })
 
-export const responsetype = z.object({
-    type: z.string()
+export const apikey = z.object({
+    key: z.string()
         .min(1, "Required")
-        .max(32, "Response type must be less than 32 characters"),
+        .max(256, "Key must be less than 256 characters"),
 })

@@ -30,7 +30,7 @@ Include feedback on the following points:
 - make my resume easier to scan.
 - add appropriate buzzwords based on the context
 
-then provide me the response in latex || markdown  format, This will make it easier for me to convert the information into a beautiful and professionally formatted document.
+then provide me the response in latex format, This will make it easier for me to convert the information into a beautiful and professionally formatted document.
 
 Here's my information delimited by triple backticks:
 
@@ -55,6 +55,3 @@ Here's the job I'm applying for delimited by triple backticks:
 ```
 [The description of the job you're applying for] 
 ```
-
-
-Summary or Objective: A brief statement summarizing your career goals and what you bring to the table.

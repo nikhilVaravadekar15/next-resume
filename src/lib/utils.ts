@@ -28,7 +28,7 @@ export function getPrompt(form: TForm) {
   - make my resume easier to scan.
   - add appropriate buzzwords based on the context
 
-  then provide me the response in ${form.responsetype.type.toLowerCase()} format, This will make it easier for me to convert the information into a beautiful and professionally formatted document.
+  then provide me the response in latex format, This will make it easier for me to convert the information into a beautiful and professionally formatted document.
 
   Here's my information delimited by triple backticks:
   \`\`\`
